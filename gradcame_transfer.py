@@ -66,12 +66,13 @@ class CardiomegalyClassifier(MedicalImageClassifier):
         img_array = self.preprocess_image(img_path)
         prediction = self.model.predict(img_array, verbose=0)[0][0]
 
-        if prediction > 0.5:
+        # Sigmoid = P(Normal), karena folder: Cardiomegaly=0, Normal=1
+        if prediction < 0.5:
             result = "Cardiomegaly (Pembesaran Jantung)"
-            confidence = prediction * 100
+            confidence = (1 - prediction) * 100
         else:
             result = "Normal"
-            confidence = (1 - prediction) * 100
+            confidence = prediction * 100
 
         return {
             "result": result,

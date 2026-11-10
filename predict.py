@@ -25,12 +25,13 @@ img_array = np.expand_dims(img_array, axis=0)
 
 prediction = model.predict(img_array, verbose=0)[0][0]
 
-if prediction > 0.5:
+# Sigmoid output = P(Normal), karena folder: Cardiomegaly=0, Normal=1
+if prediction < 0.5:
     result = "Cardiomegaly (Pembesaran Jantung)"
-    confidence = prediction * 100
+    confidence = (1 - prediction) * 100
 else:
     result = "Normal"
-    confidence = (1 - prediction) * 100
+    confidence = prediction * 100
 
 print("Hasil:", result)
 print("Confidence: %.2f%%" % confidence)

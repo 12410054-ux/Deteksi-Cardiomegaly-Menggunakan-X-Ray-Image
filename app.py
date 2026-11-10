@@ -42,13 +42,15 @@ def classify(image: Image.Image, model_key: str) -> dict:
     image = image.convert("RGB").resize((IMG_SIZE, IMG_SIZE))
     batch = np.expand_dims(np.asarray(image, dtype=np.float32) / 255.0, axis=0)
     raw = float(np.asarray(get_model(model_key).predict(batch, verbose=0)).reshape(-1)[0])
-    cardio_probability = min(max(raw, 0.0), 1.0)
+    # Sigmoid output = P(Normal), karena flow_from_directory: Cardiomegaly=0, Normal=1
+    normal_probability = min(max(raw, 0.0), 1.0)
+    cardio_probability = 1.0 - normal_probability
     positive = cardio_probability >= 0.5
     return {
         "label": "Kardiomegali" if positive else "Normal",
-        "confidence": (cardio_probability if positive else 1.0 - cardio_probability) * 100,
+        "confidence": (cardio_probability if positive else normal_probability) * 100,
         "cardiomegaly_probability": cardio_probability * 100,
-        "normal_probability": (1.0 - cardio_probability) * 100,
+        "normal_probability": normal_probability * 100,
     }
 
 
