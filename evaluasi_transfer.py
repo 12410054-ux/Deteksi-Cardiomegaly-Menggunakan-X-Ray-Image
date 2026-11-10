@@ -15,7 +15,7 @@ test_dir = "test"
 # ======================
 # LOAD MODEL
 # ======================
-model = load_model("model_cardiomegaly_transfer_finetuned.keras")
+model = load_model(os.path.join("models", "model_cardiomegaly_transfer_finetuned.keras") if os.path.exists(os.path.join("models", "model_cardiomegaly_transfer_finetuned.keras")) else "model_cardiomegaly_transfer_finetuned.keras")
 model.summary()
 
 # ======================
@@ -103,6 +103,6 @@ plt.title("ROC Curve - MobileNetV2 Model")
 plt.legend()
 
 plt.tight_layout()
-plt.savefig("roc_curve_mobilenetv2.png", dpi=300)
+os.makedirs("evaluation_reports", exist_ok=True); plt.savefig("evaluation_reports/roc_curve_mobilenetv2.png", dpi=300)
 
 plt.show()

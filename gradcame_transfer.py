@@ -181,7 +181,7 @@ class PneumoniaClassifier(MedicalImageClassifier):
 # MAIN
 # =========================================================
 if __name__ == "__main__":
-    model_path = "model_cardiomegaly_transfer_finetuned.keras"
+    model_path = os.path.join("models", "model_cardiomegaly_transfer_finetuned.keras") if os.path.exists(os.path.join("models", "model_cardiomegaly_transfer_finetuned.keras")) else "model_cardiomegaly_transfer_finetuned.keras"
     img_path = "testing/tes9.png"
 
     classifier = CardiomegalyClassifier(

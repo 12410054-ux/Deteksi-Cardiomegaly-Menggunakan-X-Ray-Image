@@ -6,7 +6,7 @@ import os
 
 IMG_SIZE = 160
 
-model = load_model("model_cardiomegaly_transfer_finetuned.keras")
+model = load_model(os.path.join("models", "model_cardiomegaly_transfer_finetuned.keras") if os.path.exists(os.path.join("models", "model_cardiomegaly_transfer_finetuned.keras")) else "model_cardiomegaly_transfer_finetuned.keras")
 
 image_path = r"testing/tes6.png"
 

@@ -89,7 +89,8 @@ from tensorflow.keras.models import load_model
 # CNN model
 t0 = time.time()
 try:
-    cnn_model = load_model("cnn_model.keras", compile=False)
+    cnn_path = os.path.join("models", "cnn_model.keras") if os.path.exists(os.path.join("models", "cnn_model.keras")) else "cnn_model.keras"
+    cnn_model = load_model(cnn_path, compile=False)
     t_cnn = time.time() - t0
     test("Load CNN model", True)
     print(f"         Waktu load: {t_cnn:.2f}s")
@@ -104,7 +105,7 @@ except Exception as e:
 t0 = time.time()
 try:
     mobilenet_model = load_model(
-        "model_cardiomegaly_transfer_finetuned.keras", compile=False
+        os.path.join("models", "model_cardiomegaly_transfer_finetuned.keras") if os.path.exists(os.path.join("models", "model_cardiomegaly_transfer_finetuned.keras")) else os.path.join("models", "model_cardiomegaly_transfer_finetuned.keras"), compile=False
     )
     t_mn = time.time() - t0
     test("Load MobileNetV2 model", True)
@@ -298,8 +299,8 @@ required_files = [
     "duamodel.py",
     "gradcame_transfer.py",
     "predict.py",
-    "cnn_model.keras",
-    "model_cardiomegaly_transfer_finetuned.keras",
+    os.path.join("models", "cnn_model.keras"),
+    os.path.join("models", "model_cardiomegaly_transfer_finetuned.keras"),
     "templates/index.html",
     "static/style.css",
     "static/app.js",

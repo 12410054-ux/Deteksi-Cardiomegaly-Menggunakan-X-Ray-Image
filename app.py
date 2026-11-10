@@ -20,9 +20,16 @@ IMG_SIZE = 160
 app = Flask(__name__)
 app.config["MAX_CONTENT_LENGTH"] = MAX_UPLOAD_BYTES
 
+def get_model_path(filename: str) -> Path:
+    models_dir_path = ROOT / "models" / filename
+    if models_dir_path.is_file():
+        return models_dir_path
+    return ROOT / filename
+
+
 MODEL_FILES = {
-    "mobilenet": ("MobileNetV2 Fine-tuned", ROOT / "model_cardiomegaly_transfer_finetuned.keras"),
-    "cnn": ("CNN Custom (4-Block)", ROOT / "cnn_model.keras"),
+    "mobilenet": ("MobileNetV2 Fine-tuned", get_model_path("model_cardiomegaly_transfer_finetuned.keras")),
+    "cnn": ("CNN Custom (4-Block)", get_model_path("cnn_model.keras")),
 }
 _models = {}
 

@@ -15,7 +15,7 @@ test_dir = "test"
 # ======================
 # LOAD MODEL
 # ======================
-model = load_model("cnn_model.keras")
+model = load_model(os.path.join("models", "cnn_model.keras") if os.path.exists(os.path.join("models", "cnn_model.keras")) else "cnn_model.keras")
 model.summary()
 
 # ======================
@@ -84,7 +84,7 @@ plt.title('Confusion Matrix of CNN Model')
 plt.tight_layout()
 
 # SAVE (WAJIB untuk paper)
-plt.savefig("confusion_matrix_cnn.png", dpi=300)
+os.makedirs("evaluation_reports", exist_ok=True); plt.savefig("evaluation_reports/confusion_matrix_cnn.png", dpi=300)
 
 plt.show()
 
@@ -106,6 +106,6 @@ plt.title("ROC Curve - CNN Model")
 plt.legend()
 
 plt.tight_layout()
-plt.savefig("roc_curve_CNN.png", dpi=300)
+os.makedirs("evaluation_reports", exist_ok=True); plt.savefig("evaluation_reports/roc_curve_CNN.png", dpi=300)
 
 plt.show()

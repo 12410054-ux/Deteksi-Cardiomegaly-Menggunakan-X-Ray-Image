@@ -29,7 +29,7 @@ y_true = test_generator.classes
 # ======================
 # CNN MODEL
 # ======================
-cnn_model = load_model("cnn_model.keras")
+cnn_model = load_model(os.path.join("models", "cnn_model.keras") if os.path.exists(os.path.join("models", "cnn_model.keras")) else "cnn_model.keras")
 cnn_pred = cnn_model.predict(test_generator)
 fpr_cnn, tpr_cnn, _ = roc_curve(y_true, cnn_pred)
 auc_cnn = auc(fpr_cnn, tpr_cnn)
@@ -37,7 +37,7 @@ auc_cnn = auc(fpr_cnn, tpr_cnn)
 # ======================
 # MobileNetV2 MODEL
 # ======================
-mobilenet_model = load_model("model_cardiomegaly_transfer_finetuned.keras")
+mobilenet_model = load_model(os.path.join("models", "model_cardiomegaly_transfer_finetuned.keras") if os.path.exists(os.path.join("models", "model_cardiomegaly_transfer_finetuned.keras")) else "model_cardiomegaly_transfer_finetuned.keras")
 mobilenet_pred = mobilenet_model.predict(test_generator)
 fpr_m, tpr_m, _ = roc_curve(y_true, mobilenet_pred)
 auc_m = auc(fpr_m, tpr_m)
@@ -61,6 +61,6 @@ plt.legend()
 plt.tight_layout()
 
 # SAVE (WAJIB UNTUK PAPER)
-plt.savefig("roc_comparison.png", dpi=300)
+os.makedirs("evaluation_reports", exist_ok=True); plt.savefig("evaluation_reports/roc_comparison.png", dpi=300)
 
 plt.show()

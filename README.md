@@ -147,6 +147,7 @@ docker run -p 5000:5000 ruang-rontgen
 ```
 project X-ray jantung/
 ├── app.py                      # Flask web server + /predict endpoint
+├── test_app.py                 # Automated testing suite
 ├── train_cnn.py                # Training model CNN
 ├── train_transfer.py           # Training model MobileNetV2 (Transfer Learning)
 ├── evaluasi_cnn.py             # Evaluasi model CNN
@@ -157,9 +158,6 @@ project X-ray jantung/
 ├── hyperparameter_tuning.py    # Hyperparameter tuning (Keras Tuner)
 ├── error_analysis.py           # Analisis error + Grad-CAM misclassified
 ├── data.py                     # Hitung data per kelas
-├── cnn.py                      # Load & summary model CNN
-├── cnn_model.keras             # Model CNN terlatih (~30 MB)
-├── model_cardiomegaly_transfer_finetuned.keras  # MobileNetV2 (~24 MB)
 ├── requirements.txt            # Python dependencies
 ├── Dockerfile                  # Docker deployment
 ├── Procfile                    # Railway/Render deployment
@@ -167,17 +165,28 @@ project X-ray jantung/
 ├── runtime.txt                 # Python version (Render)
 ├── .gitignore
 ├── README.md
+├── models/                     # Tempat model Deep Learning terlatih (.keras)
+│   ├── model_cardiomegaly_transfer_finetuned.keras  # MobileNetV2 (~24 MB) - Model Utama
+│   └── cnn_model.keras                              # CNN Custom (~30 MB) - Baseline
+├── evaluation_reports/         # Hasil evaluasi visual (ROC curve, Confusion Matrix)
+│   ├── confusion_matrix_cnn.png
+│   ├── confusion_matrix_mobilenetv2.png
+│   ├── roc_comparison.png
+│   ├── roc_curve_CNN.png
+│   └── roc_curve_mobilenetv2.png
 ├── static/
 │   ├── style.css               # Styling
-│   └── app.js                  # Frontend logic
+│   ├── app.js                  # Frontend logic
+│   └── uploads/                # Direktori upload citra sementara
 ├── templates/
 │   └── index.html              # Halaman web utama
 ├── train/                      # Dataset training
 │   ├── Cardiomegaly/ (2220)
 │   └── Normal/ (2220)
-└── test/                       # Dataset testing
-    ├── Cardiomegaly/ (557)
-    └── Normal/ (557)
+├── test/                       # Dataset testing
+│   ├── Cardiomegaly/ (557)
+│   └── Normal/ (557)
+└── testing/                    # Sampel citra untuk uji manual
 ```
 
 ## 🛠️ Teknologi

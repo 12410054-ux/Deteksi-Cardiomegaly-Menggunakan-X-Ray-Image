@@ -37,8 +37,8 @@ CLASS_NAMES = ["Cardiomegaly", "Normal"]
 # PILIH MODEL
 # ======================
 MODELS = {
-    "CNN": "cnn_model.keras",
-    "MobileNetV2": "model_cardiomegaly_transfer_finetuned.keras",
+    "CNN": os.path.join("models", "cnn_model.keras") if os.path.exists(os.path.join("models", "cnn_model.keras")) else "cnn_model.keras",
+    "MobileNetV2": os.path.join("models", "model_cardiomegaly_transfer_finetuned.keras") if os.path.exists(os.path.join("models", "model_cardiomegaly_transfer_finetuned.keras")) else "model_cardiomegaly_transfer_finetuned.keras",
 }
 
 
