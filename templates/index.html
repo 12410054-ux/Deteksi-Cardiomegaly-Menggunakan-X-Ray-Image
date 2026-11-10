@@ -20,7 +20,7 @@
             <span class="drop-title" id="file-title">Letakkan gambar di sini</span><span class="drop-subtitle" id="file-subtitle">atau <span class="browse-link">telusuri berkas</span> di perangkat Anda</span><span class="file-limit">MAKSIMUM 10 MB</span>
           </label>
           <div class="preview-wrap" id="preview-wrap" hidden><img id="preview" alt="Pratinjau citra yang dipilih"><button type="button" id="remove-image" class="remove-button" aria-label="Hapus gambar">×</button></div>
-          <div class="model-select"><label for="model">MODEL ANALISIS</label><div class="select-wrap"><select name="model" id="model">{% for key, value in models.items() %}<option value="{{ key }}" {% if key == 'mobilenet' %}selected{% endif %}>{{ value[0] }}</option>{% endfor %}</select><span>⌄</span></div></div>
+          <input type="hidden" name="model" value="mobilenet">
           <button class="analyze-button" id="submit-button" type="submit"><span>Analisis citra</span><span class="button-arrow">↗</span></button><div class="error-message" id="error-message" role="alert" hidden></div>
         </form>
       </div>
