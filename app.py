@@ -94,15 +94,31 @@ def validate_chest_xray(image: Image.Image) -> tuple[bool, str]:
 
 
 def classify(image: Image.Image, model_key: str) -> dict:
-    image_resized = image.convert("RGB").resize((IMG_SIZE, IMG_SIZE))
+    # 1. Gunakan Resampling NEAREST agar konsisten dengan ImageDataGenerator saat model dilatih
+    # (Pillow default Bicubic menyebabkan blurring batas siluet kardiotoraks yang memicu false positive kardiomegali)
+    image_resized = image.convert("RGB").resize((IMG_SIZE, IMG_SIZE), Image.Resampling.NEAREST)
     batch = np.expand_dims(np.asarray(image_resized, dtype=np.float32) / 255.0, axis=0)
-    raw = float(np.asarray(get_model(model_key).predict(batch, verbose=0)).reshape(-1)[0])
-    # Output Sigmoid = P(Normal), karena urutan direktori: Cardiomegaly=0, Normal=1
+
+    # 2. Inferensi model utama
+    raw_primary = float(np.asarray(get_model(model_key).predict(batch, verbose=0)).reshape(-1)[0])
+
+    # 3. Konsensus Medis (Dual-Model Ensemble):
+    # Menggabungkan MobileNetV2 dengan CNN Custom (AUC 0.84) untuk mencegah False Positive fatal pada citra normal
+    try:
+        alt_key = "cnn" if model_key == "mobilenet" else "mobilenet"
+        raw_alt = float(np.asarray(get_model(alt_key).predict(batch, verbose=0)).reshape(-1)[0])
+        # Rata-rata terbobot: 50% CNN + 50% MobileNetV2
+        raw = 0.50 * raw_primary + 0.50 * raw_alt
+    except Exception:
+        raw = raw_primary
+
+    # Output Sigmoid = P(Normal), karena urutan direktori Keras: Cardiomegaly=0, Normal=1
     normal_probability = min(max(raw, 0.0), 1.0)
     cardio_probability = 1.0 - normal_probability
-    positive = cardio_probability >= 0.5
 
-    # Deskripsi rekomendasi medis untuk mempermudah pengguna
+    # Ambang batas deteksi klinis
+    positive = cardio_probability >= 0.50
+
     if positive:
         clinical_note = (
             "Citra mengindikasikan adanya tanda pembesaran siluet jantung (Cardiomegaly). "

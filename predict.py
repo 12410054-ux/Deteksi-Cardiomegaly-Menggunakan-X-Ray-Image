@@ -18,7 +18,7 @@ if not os.path.exists(image_path):
 img = cv2.imread(image_path)
 img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
-img_resized = cv2.resize(img, (IMG_SIZE, IMG_SIZE))
+img_resized = cv2.resize(img, (IMG_SIZE, IMG_SIZE), interpolation=cv2.INTER_NEAREST)
 
 img_array = img_resized / 255.0
 img_array = np.expand_dims(img_array, axis=0)
