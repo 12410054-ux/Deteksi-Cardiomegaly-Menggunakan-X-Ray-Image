@@ -1,254 +1,42 @@
 <!doctype html>
 <html lang="id">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0d1b2a">
-  <title>CardioScan AI — Sistem Radiologi Deteksi Kardiomegali</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#f5f7f4">
+  <title>Ruang Rontgen — Analisis Citra Dada</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <!-- Header Bar Medis / PACS Clinic -->
-  <header class="med-header">
-    <div class="header-inner">
-      <div class="brand-group">
-        <div class="med-logo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
-            <path d="M12 5v14M5 12h14" stroke-dasharray="2 2" stroke-width="1.2"/>
-          </svg>
-        </div>
-        <div>
-          <div class="brand-title">CardioScan <span class="brand-badge">AI RADIOLOGY</span></div>
-          <div class="brand-sub">Sistem Skrining Radiografi Toraks Kardiopulmonal</div>
-        </div>
-      </div>
-      <div class="header-status">
-        <div class="pacs-node"><span class="pulse-indicator"></span> SISTEM ONLINE · PACS WORKSTATION</div>
-        <div class="server-meta">MODALITAS: CXR (CHEST X-RAY)</div>
-      </div>
-    </div>
-  </header>
-
-  <main class="container">
-    <!-- Medical Notice Banner -->
-    <div class="guide-banner">
-      <div class="guide-icon">🩺</div>
-      <div class="guide-text">
-        <strong>Panduan Klinis Penggunaan:</strong> 
-        Unggah citra rontgen toraks dada (CXR) proyeksi PA/AP. Sistem dilengkapi filter proteksi otomatis yang <u>menolak foto berwarna, dokumen, maupun gambar selain rontgen dada</u>.
-      </div>
-    </div>
-
-    <div class="grid-layout">
-      <!-- PANEL KIRI: Upload & Diagnostic Workstation -->
-      <section class="card upload-card">
-        <div class="card-header">
-          <div class="step-badge">1</div>
-          <div>
-            <h2>Input Citra Rontgen Toraks</h2>
-            <p>Pilih atau tarik citra radiografi dada pasien</p>
-          </div>
-        </div>
-
+  <header class="topbar"><a class="brand" href="/"><span class="brand-mark">✳</span><span>ruang<span class="brand-light">rontgen</span></span></a><div class="top-note"><span class="live-dot"></span> SISTEM ANALISIS CITRA</div></header>
+  <main>
+    <section class="intro"><div class="eyebrow"><span></span> LABORATORIUM AI · RADIOLOGI</div><h1>Melihat lebih jelas,<br><em>memahami lebih dalam.</em></h1><p class="intro-copy">Unggah citra rontgen dada untuk mendapatkan analisis awal berbasis model pembelajaran mesin.</p></section>
+    <section class="workspace" aria-label="Analisis rontgen">
+      <div class="upload-panel">
+        <div class="panel-heading"><div><span class="step">01</span><h2>Tambahkan citra</h2></div><span class="panel-meta">PNG · JPG · WEBP</span></div>
         <form id="prediction-form">
-          <!-- Dropzone Area -->
-          <label class="dropzone" id="dropzone" for="image-input">
-            <input id="image-input" name="image" type="file" accept="image/png,image/jpeg,image/webp" hidden>
-            <div class="dropzone-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
-                <circle cx="9" cy="9" r="2"/>
-                <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
-              </svg>
-            </div>
-            <div class="drop-primary" id="file-title">Klik untuk Telusuri atau Tarik Berkas ke Sini</div>
-            <div class="drop-secondary" id="file-subtitle">Khusus Citra X-Ray Toraks Dada (Monokromatik)</div>
-            <div class="drop-specs">Format: PNG, JPG, JPEG, WEBP · Maksimal 10 MB</div>
+          <label class="dropzone" id="dropzone" for="image-input"><input id="image-input" name="image" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+            <div class="upload-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M4 15.5v3A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5v-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <span class="drop-title" id="file-title">Letakkan gambar di sini</span><span class="drop-subtitle" id="file-subtitle">atau <span class="browse-link">telusuri berkas</span> di perangkat Anda</span><span class="file-limit">MAKSIMUM 10 MB</span>
           </label>
-
-          <!-- Image Preview Area -->
-          <div class="preview-container" id="preview-wrap" hidden>
-            <div class="viewer-screen">
-              <img id="preview" alt="Pratinjau Citra Rontgen">
-              <div class="viewer-tag">CXR-PREVIEW</div>
-            </div>
-            <button type="button" id="remove-image" class="btn-cancel" title="Ganti Gambar">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M18 6 6 18M6 6l12 12"/>
-              </svg>
-              Ganti Berkas
-            </button>
-          </div>
-
-          <!-- Medical Model Selector -->
-          <div class="form-group">
-            <label for="model">
-              <span>Arsitektur Model Deep Learning</span>
-              <span class="info-tooltip" title="Model AI yang digunakan untuk menganalisis pembesaran siluet jantung">ℹ️</span>
-            </label>
-            <div class="select-wrapper">
-              <select name="model" id="model">
-                {% for key, value in models.items() %}
-                <option value="{{ key }}" {% if key == 'mobilenet' %}selected{% endif %}>
-                  {{ value[0] }} {% if key == 'mobilenet' %}(Akurasi Tinggi - Rekomendasi){% endif %}
-                </option>
-                {% endfor %}
-              </select>
-            </div>
-          </div>
-
-          <!-- Action Button -->
-          <button class="btn-analyze" id="submit-button" type="submit">
-            <span class="btn-text">Mulai Analisis Radiologi</span>
-            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </button>
-
-          <!-- Error Alert Box -->
-          <div class="alert-box" id="error-message" role="alert" hidden>
-            <div class="alert-icon">⚠️</div>
-            <div class="alert-content">
-              <strong id="alert-title">Peringatan Validasi Citra:</strong>
-              <div id="alert-desc">Pesan error</div>
-            </div>
-          </div>
+          <div class="preview-wrap" id="preview-wrap" hidden><img id="preview" alt="Pratinjau citra yang dipilih"><button type="button" id="remove-image" class="remove-button" aria-label="Hapus gambar">×</button></div>
+          <div class="model-select"><label for="model">MODEL ANALISIS</label><div class="select-wrap"><select name="model" id="model">{% for key, value in models.items() %}<option value="{{ key }}" {% if key == 'mobilenet' %}selected{% endif %}>{{ value[0] }}</option>{% endfor %}</select><span>⌄</span></div></div>
+          <button class="analyze-button" id="submit-button" type="submit"><span>Analisis citra</span><span class="button-arrow">↗</span></button><div class="error-message" id="error-message" role="alert" hidden></div>
         </form>
-      </section>
-
-      <!-- PANEL KANAN: Clinical Diagnostic Report -->
-      <section class="card result-card" id="result-panel">
-        <div class="card-header">
-          <div class="step-badge">2</div>
-          <div>
-            <h2>Laporan Hasil Skrining AI</h2>
-            <p>Interpretasi otomatis rasio siluet kardiomegali</p>
-          </div>
-          <span class="badge-status" id="result-status">MENUNGGU PEMERIKSAAN</span>
-        </div>
-
-        <!-- Initial Blank State -->
-        <div class="empty-state" id="empty-state">
-          <div class="ecg-graphic">
-            <svg viewBox="0 0 500 150" class="ecg-wave">
-              <path d="M 0 75 L 120 75 L 140 30 L 155 120 L 170 60 L 180 85 L 195 75 L 300 75 L 320 20 L 335 130 L 350 50 L 365 90 L 380 75 L 500 75"/>
-            </svg>
-          </div>
-          <h3>Menunggu Citra Rontgen</h3>
-          <p>Unggah foto rontgen toraks dada di panel sebelah kiri untuk mendapatkan hasil klasifikasi dan estimasi probabilitas klinis.</p>
-        </div>
-
-        <!-- Scanning State -->
-        <div class="loading-state" id="loading-state" hidden>
-          <div class="radar-spinner">
-            <div class="radar-line"></div>
-          </div>
-          <h3>Memproses Radiograf Toraks...</h3>
-          <p>Menganalisis matriks piksel dan menghitung batas kardiotoraks...</p>
-        </div>
-
-        <!-- Result Report State -->
+      </div>
+      <div class="result-panel" id="result-panel">
+        <div class="panel-heading"><div><span class="step">02</span><h2>Hasil analisis</h2></div><span class="panel-meta" id="result-status">MENUNGGU CITRA</span></div>
+        <div class="empty-state" id="empty-state"><div class="scan-illustration"><div class="scan-ring ring-one"></div><div class="scan-ring ring-two"></div><div class="scan-cross">＋</div><div class="scan-center">✳</div></div><p>Hasil akan muncul<br>di ruang ini.</p><span>Unggah citra untuk memulai analisis</span></div>
+        <div class="loading-state" id="loading-state" hidden><div class="loader"></div><p>Menganalisis citra</p><span>Model sedang memproses gambar Anda</span></div>
         <div class="result-content" id="result-content" hidden>
-          <div class="diagnostic-summary">
-            <div class="report-main">
-              <div class="label-heading">INTERPRETASI RADIOLOGIS:</div>
-              <div class="report-badge" id="report-badge">
-                <span class="dot"></span>
-                <span id="diagnosis">—</span>
-              </div>
-            </div>
-            <div class="report-score">
-              <div class="label-heading">TINGKAT KEYAKINAN:</div>
-              <div class="score-value" id="confidence">—%</div>
-            </div>
-          </div>
-
-          <!-- Medical Clinical Note -->
-          <div class="clinical-note" id="clinical-note-box">
-            <div class="note-icon">📋</div>
-            <div class="note-text" id="clinical-note">Catatan klinis akan tampil di sini.</div>
-          </div>
-
-          <!-- Probability Meters -->
-          <div class="metric-section">
-            <div class="metric-header">
-              <span>Distribusi Probabilitas Kelas</span>
-              <span class="model-tag" id="model-name">—</span>
-            </div>
-
-            <!-- Normal Meter -->
-            <div class="prob-card">
-              <div class="prob-info">
-                <span class="prob-name">Normal (Non-Kardiomegali)</span>
-                <span class="prob-num" id="normal-value">0%</span>
-              </div>
-              <div class="meter-track">
-                <div class="meter-fill fill-normal" id="normal-bar"></div>
-              </div>
-            </div>
-
-            <!-- Cardiomegaly Meter -->
-            <div class="prob-card">
-              <div class="prob-info">
-                <span class="prob-name">Kardiomegali (Pembesaran Jantung)</span>
-                <span class="prob-num" id="cardio-value">0%</span>
-              </div>
-              <div class="meter-track">
-                <div class="meter-fill fill-cardio" id="cardio-bar"></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Image Evaluated -->
-          <div class="analyzed-view">
-            <div class="analyzed-head">Citra yang Dipindai:</div>
-            <div class="analyzed-img-box">
-              <img id="result-image" alt="Citra Toraks Terverifikasi">
-              <div class="film-meta">
-                <span>FORMAT: GRAYSCALE CXR</span>
-                <span>STATUS: VERIFIED DICOM/IMAGE</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Actions -->
-          <div class="action-footer">
-            <button class="btn-reset" id="reset-button" type="button">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-                <path d="M3 3v5h5"/>
-              </svg>
-              Pindai Pasien / Berkas Lain
-            </button>
-            <button class="btn-print" onclick="window.print()" type="button">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
-                <path d="M6 14h12v8H6z"/>
-              </svg>
-              Cetak Laporan
-            </button>
-          </div>
+          <div class="result-image-wrap"><img id="result-image" alt="Citra rontgen yang dianalisis"><div class="image-chip"><span class="live-dot"></span> CITRA DIANALISIS</div></div>
+          <div class="diagnosis-line"><div><span class="result-label">HASIL PREDIKSI</span><h3 id="diagnosis">—</h3></div><div class="confidence"><span id="confidence">—</span><small>KEYAKINAN</small></div></div>
+          <div class="probability-block"><div class="probability-heading"><span>Probabilitas kelas</span><span id="model-name">—</span></div><div class="probability-row"><span>Normal</span><div class="bar-track"><div id="normal-bar" class="bar normal-bar"></div></div><b id="normal-value">—</b></div><div class="probability-row"><span>Kardiomegali</span><div class="bar-track"><div id="cardio-bar" class="bar cardio-bar"></div></div><b id="cardio-value">—</b></div></div>
+          <div class="result-footnote"><span>ⓘ</span><p>Hasil ini merupakan prediksi model AI untuk tujuan edukasi dan penelitian, bukan diagnosis medis. Konsultasikan hasil dengan dokter.</p></div><button class="reset-button" id="reset-button" type="button">← Analisis gambar lain</button>
         </div>
-
-        <!-- Footer Disclaimer -->
-        <div class="med-disclaimer">
-          <strong>Perhatian Medis:</strong> Hasil komputasi kecerdasan buatan ini berfungsi sebagai alat skrining awal dan pembantu radiolog (Computer-Aided Diagnosis). Keputusan diagnosis akhir dan tindakan klinis wajib dikonfirmasi oleh dokter spesialis radiologi atau kardiologi.
-        </div>
-      </section>
-    </div>
-  </main>
-
-  <footer class="app-footer">
-    <div class="container footer-inner">
-      <span>CardioScan AI &copy; 2026 · Sistem Pakar Radiologi Toraks</span>
-      <span>Standar Evaluasi CTR (Cardiothoracic Ratio)</span>
-    </div>
-  </footer>
-
-  <script src="{{ url_for('static', filename='app.js') }}"></script>
-</body>
-</html>
+        <div class="disclaimer-empty" id="disclaimer-empty"><span>ⓘ</span> Alat bantu penelitian · Bukan pengganti diagnosis profesional</div>
+      </div>
+    </section>
+    <footer><span>RUANG RONTGEN <span class="footer-dot">·</span> PROTOTIPE PENELITIAN</span><span>MODEL PEMBELAJARAN MESIN · 2026</span></footer>
+  </main><script src="{{ url_for('static', filename='app.js') }}"></script>
+</body></html>
