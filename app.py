@@ -28,8 +28,8 @@ def get_model_path(filename: str) -> Path:
 
 
 MODEL_FILES = {
-    "mobilenet": ("MobileNetV2 Fine-tuned", get_model_path("model_cardiomegaly_transfer_finetuned.keras")),
     "cnn": ("CNN Custom (4-Block)", get_model_path("cnn_model.keras")),
+    "mobilenet": ("MobileNetV2 Fine-tuned", get_model_path("model_cardiomegaly_transfer_finetuned.keras")),
 }
 _models = {}
 
@@ -150,7 +150,7 @@ def index():
 @app.post("/predict")
 def predict():
     uploaded = request.files.get("image")
-    model_key = request.form.get("model", "mobilenet")
+    model_key = request.form.get("model", "cnn")
     if not uploaded or not uploaded.filename:
         return jsonify(error="Silakan pilih berkas citra rontgen dada terlebih dahulu."), 400
     if Path(uploaded.filename).suffix.lower() not in ALLOWED_EXTENSIONS:
