@@ -1,0 +1,11 @@
+train/
+test/
+testing/
+tuning_results/
+error_analysis_output/
+__pycache__/
+*.pyc
+.git/
+.gitignore
+.venv/
+*.md

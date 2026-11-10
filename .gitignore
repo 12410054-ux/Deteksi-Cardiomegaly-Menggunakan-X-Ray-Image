@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Dataset (terlalu besar untuk Git)
+train/
+test/
+testing/
+
+# Upload hasil user
+static/uploads/
+
+# Tuning & analysis output
+tuning_results/
+error_analysis_output/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Jupyter
+.ipynb_checkpoints/

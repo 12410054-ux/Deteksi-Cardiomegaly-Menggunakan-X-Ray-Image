@@ -1,0 +1,12 @@
+# Render.com Blueprint — deploy otomatis dari Git
+# Docs: https://docs.render.com/blueprint-spec
+services:
+  - type: web
+    name: ruang-rontgen
+    runtime: python
+    plan: starter          # atau free (RAM terbatas ~512 MB)
+    buildCommand: pip install -r requirements.txt gunicorn
+    startCommand: gunicorn --bind 0.0.0.0:$PORT --workers 1 --timeout 120 app:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.9"
