@@ -1,4 +1,4 @@
-"""Web interface for the trained chest X-ray classifiers."""
+"""Web interface for the trained chest X-ray classifiers with clinical UI."""
 from __future__ import annotations
 
 import os
@@ -22,7 +22,7 @@ app.config["MAX_CONTENT_LENGTH"] = MAX_UPLOAD_BYTES
 
 MODEL_FILES = {
     "mobilenet": ("MobileNetV2 Fine-tuned", ROOT / "model_cardiomegaly_transfer_finetuned.keras"),
-    "cnn": ("CNN", ROOT / "cnn_model.keras"),
+    "cnn": ("CNN Custom (4-Block)", ROOT / "cnn_model.keras"),
 }
 _models = {}
 
@@ -38,19 +38,84 @@ def get_model(model_key: str):
     return _models[model_key]
 
 
+def validate_chest_xray(image: Image.Image) -> tuple[bool, str]:
+    """
+    Validasi citra medis untuk memastikan berkas yang diunggah adalah citra rontgen toraks dada (Chest X-Ray),
+    bukan foto selfie, dokumen, foto benda, atau gambar berwarna non-medis.
+    """
+    img_rgb = image.convert("RGB")
+    arr = np.asarray(img_rgb, dtype=np.float32)
+
+    # 1. Aspek Rasio (X-ray thorax biasanya rasio persegi hingga mendekati portrait wajar)
+    w, h = image.size
+    aspect = w / float(h)
+    if aspect < 0.45 or aspect > 2.2:
+        return (
+            False,
+            "Proporsi gambar tidak sesuai standar foto rontgen dada/toraks (aspek rasio tidak wajar). Pastikan mengunggah citra rontgen toraks PA/AP.",
+        )
+
+    # 2. Saturasi Warna (Citra rontgen selalu monokromatik / skala abu-abu)
+    # Foto berwarna biasa (pemandangan, orang, mobil, dll) memiliki selisih kanal RGB yang tinggi
+    diff_rg = np.mean(np.abs(arr[:, :, 0] - arr[:, :, 1]))
+    diff_gb = np.mean(np.abs(arr[:, :, 1] - arr[:, :, 2]))
+    color_diff = (diff_rg + diff_gb) / 2.0
+    if color_diff > 12.0:
+        return (
+            False,
+            "Berkas terdeteksi sebagai gambar berwarna! Sistem ini hanya menerima citra rontgen X-ray dada (monokromatik / grayscale). Foto umum, dokumen, atau selfie tidak diizinkan.",
+        )
+
+    # 3. Rentang Kontras / Deviasi Standar (mendeteksi gambar polos atau noise)
+    gray = np.mean(arr, axis=2)
+    std = float(np.std(gray))
+    if std < 18.0:
+        return (
+            False,
+            "Kontras citra terlalu rendah atau gambar kosong/polos. Citra tidak memenuhi kriteria radiologi dada.",
+        )
+
+    # 4. Rata-rata intensitas pencahayaan (bukan blank hitam pekat atau putih polos)
+    mean_val = float(np.mean(gray))
+    if mean_val < 25.0 or mean_val > 235.0:
+        return (
+            False,
+            "Intensitas pencahayaan tidak normal untuk citra radiografi toraks dada.",
+        )
+
+    return True, "Valid"
+
+
 def classify(image: Image.Image, model_key: str) -> dict:
-    image = image.convert("RGB").resize((IMG_SIZE, IMG_SIZE))
-    batch = np.expand_dims(np.asarray(image, dtype=np.float32) / 255.0, axis=0)
+    image_resized = image.convert("RGB").resize((IMG_SIZE, IMG_SIZE))
+    batch = np.expand_dims(np.asarray(image_resized, dtype=np.float32) / 255.0, axis=0)
     raw = float(np.asarray(get_model(model_key).predict(batch, verbose=0)).reshape(-1)[0])
-    # Sigmoid output = P(Normal), karena flow_from_directory: Cardiomegaly=0, Normal=1
+    # Output Sigmoid = P(Normal), karena urutan direktori: Cardiomegaly=0, Normal=1
     normal_probability = min(max(raw, 0.0), 1.0)
     cardio_probability = 1.0 - normal_probability
     positive = cardio_probability >= 0.5
+
+    # Deskripsi rekomendasi medis untuk mempermudah pengguna
+    if positive:
+        clinical_note = (
+            "Citra mengindikasikan adanya tanda pembesaran siluet jantung (Cardiomegaly). "
+            "Disarankan pemeriksaan lanjutan seperti Ekokardiografi (ECHO) dan konfirmasi oleh Dokter Spesialis Jantung atau Radiolog."
+        )
+        status_type = "warning"
+    else:
+        clinical_note = (
+            "Siluet dan ukuran jantung dalam batas normal (Cardiothoracic Ratio < 0.50). "
+            "Tidak ditemukan indikasi pembesaran jantung pada citra rontgen ini."
+        )
+        status_type = "success"
+
     return {
         "label": "Kardiomegali" if positive else "Normal",
+        "status_type": status_type,
         "confidence": (cardio_probability if positive else normal_probability) * 100,
         "cardiomegaly_probability": cardio_probability * 100,
         "normal_probability": normal_probability * 100,
+        "clinical_note": clinical_note,
     }
 
 
@@ -64,20 +129,28 @@ def predict():
     uploaded = request.files.get("image")
     model_key = request.form.get("model", "mobilenet")
     if not uploaded or not uploaded.filename:
-        return jsonify(error="Pilih gambar rontgen terlebih dahulu."), 400
+        return jsonify(error="Silakan pilih berkas citra rontgen dada terlebih dahulu."), 400
     if Path(uploaded.filename).suffix.lower() not in ALLOWED_EXTENSIONS:
-        return jsonify(error="Gunakan gambar PNG, JPG, JPEG, atau WEBP."), 400
+        return jsonify(error="Format berkas tidak didukung. Harap gunakan format DICOM export (PNG, JPG, JPEG, atau WEBP)."), 400
+
     try:
         image = Image.open(uploaded.stream)
         image.load()
-        result = classify(image, model_key)
     except (UnidentifiedImageError, OSError):
-        return jsonify(error="Berkas tidak dapat dibaca sebagai gambar."), 400
+        return jsonify(error="Berkas rusak atau tidak dapat dibaca sebagai format gambar yang valid."), 400
+
+    # Validasi ketat: Hanya menerima Citra Rontgen Toraks Dada (Chest X-Ray)
+    is_valid_xray, message = validate_chest_xray(image)
+    if not is_valid_xray:
+        return jsonify(error=message, is_validation_error=True), 400
+
+    try:
+        result = classify(image, model_key)
     except (ValueError, FileNotFoundError) as exc:
         return jsonify(error=str(exc)), 400
     except Exception:
         app.logger.exception("Inference failed")
-        return jsonify(error="Prediksi gagal. Periksa model dan dependensi aplikasi."), 500
+        return jsonify(error="Proses inferensi gagal. Silakan periksa koneksi atau model AI."), 500
 
     image.thumbnail((1400, 1400))
     image_path = UPLOAD_DIR / f"{uuid4().hex}.jpg"
@@ -91,7 +164,7 @@ def predict():
 
 @app.errorhandler(413)
 def too_large(_error):
-    return jsonify(error="Ukuran gambar maksimal 10 MB."), 413
+    return jsonify(error="Ukuran berkas melebihi batas maksimum (10 MB)."), 413
 
 
 if __name__ == "__main__":
