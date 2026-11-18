@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Analisis Perbandingan MobileNetV2 dan Custom CNN untuk Deteksi Kardiomegali</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 2.5cm 2cm 2.5cm 2cm;
+    }
+    body {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 11pt;
+      line-height: 1.5;
+      color: #000;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px;
+      text-align: justify;
+    }
+    h1.title {
+      font-size: 18pt;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+    .authors {
+      font-size: 12pt;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 4px;
+    }
+    .affiliation {
+      font-size: 10pt;
+      font-style: italic;
+      text-align: center;
+      margin-bottom: 2px;
+    }
+    .year {
+      font-size: 11pt;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    .abstract-box {
+      margin: 20px 0;
+      padding: 0 10px;
+    }
+    .abstract-title {
+      font-size: 11pt;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+    .keywords {
+      margin-top: 10px;
+      font-size: 10pt;
+    }
+    h2 {
+      font-size: 13pt;
+      font-weight: bold;
+      margin-top: 25px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      border-bottom: 1px solid #333;
+      padding-bottom: 4px;
+    }
+    h3 {
+      font-size: 11.5pt;
+      font-weight: bold;
+      margin-top: 18px;
+      margin-bottom: 8px;
+    }
+    p {
+      margin-bottom: 10px;
+      text-indent: 1.25cm;
+    }
+    p.no-indent {
+      text-indent: 0;
+    }
+    ol, ul {
+      margin-bottom: 10px;
+      padding-left: 1.5cm;
+    }
+    li {
+      margin-bottom: 6px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 18px 0;
+      font-size: 10pt;
+    }
+    caption {
+      caption-side: top;
+      font-weight: bold;
+      margin-bottom: 6px;
+      text-align: center;
+    }
+    th, td {
+      border-top: 1px solid #000;
+      border-bottom: 1px solid #000;
+      padding: 6px 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f8f9fa;
+      font-weight: bold;
+      text-align: center;
+    }
+    td.center {
+      text-align: center;
+    }
+    .figure-container {
+      margin: 22px 0;
+      text-align: center;
+    }
+    .figure-container img {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      display: block;
+      margin: 0 auto;
+    }
+    .figure-caption {
+      font-size: 10pt;
+      font-weight: bold;
+      margin-top: 8px;
+      text-align: center;
+      line-height: 1.35;
+    }
+    .equation {
+      text-align: center;
+      margin: 14px 0;
+      font-style: italic;
+    }
+    .equation span.eqno {
+      float: right;
+      font-style: normal;
+    }
+    .ref-list {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    .ref-list li {
+      padding-left: 28px;
+      text-indent: -28px;
+      margin-bottom: 8px;
+      font-size: 9.5pt;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 class="title">Analisis Perbandingan MobileNetV2 dan Custom CNN untuk Deteksi Kardiomegali</h1>
+  <div class="authors">Mamangkey, Gerald Rafael; Mandang, Ariel Quinn; Samandi Faithhly Hiskia Miracle</div>
+  <div class="affiliation">Program Studi Informatika, Fakultas Ilmu Komputer, Universitas Klabat, Airmadidi, Indonesia</div>
+  <div class="affiliation">e-mail: geraldrafael@gmail.com</div>
+  <div class="year">2026</div>
+
+  <div class="abstract-box">
+    <div class="abstract-title">Abstrak</div>
+    <p class="no-indent">
+      <em>Kardiomegali adalah pembesaran jantung yang abnormal yang menandakan patologi kardiovaskular berat, sehingga deteksi radiografik yang tepat waktu sangat penting untuk mencegah gagal jantung. Namun, penilaian manual konvensional sangat bergantung pada keahlian radiolog dan estimasi visual terhadap rasio kardiotoraks, yang menyebabkan inkonsistensi diagnostik dan kelelahan interpretasi dalam triase klinis yang terbebani. Untuk menjawab tantangan diagnostik ini, sistem Computer-Aided Diagnosis (CADx) otomatis yang memanfaatkan deep convolutional neural network menawarkan deteksi yang objektif, dapat direproduksi, dan instan dari radiograf dada. Penelitian ini melakukan analisis perbandingan empiris secara langsung antara transfer learning melalui MobileNetV2 yang di-fine-tune dan Custom CNN spesifik domain yang dilatih dari nol, di bawah kondisi prapemrosesan dan evaluasi yang identik. Dataset eksperimen terdiri dari 5,552 radiograf dada posteroanterior (PA) dan anteroposterior (AP) yang seimbang (2,776 kardiomegali dan 2,776 normal) yang dibagi menjadi 4,438 sampel pelatihan dan 1,114 sampel pengujian independen. Kedua arsitektur dilatih dengan normalisasi piksel, augmentasi ringan, resampling spasial nearest-neighbor, dan optimasi Adam dengan early stopping. Hasil eksperimen pada 1,114 citra uji hold-out menunjukkan bahwa Custom CNN secara konsisten mengungguli MobileNetV2 yang di-fine-tune pada seluruh metrik evaluasi kuantitatif. Custom CNN mencapai akurasi keseluruhan sebesar 75.49% dibandingkan 70.20% untuk MobileNetV2, yang mencerminkan keunggulan 5.29 poin persentase. Pada analisis receiver operating characteristic, Custom CNN menghasilkan Area Under the Curve (ROC-AUC) sebesar 0.8350, melampaui Area Under the Curve MobileNetV2 sebesar 0.7867. Selain itu, Custom CNN mencapai presisi (74.15% vs. 68.23%), recall (78.28% vs. 75.58%), dan skor F1 (76.16% vs. 71.72%) yang lebih unggul. Yang terpenting, Custom CNN menekan kasus patologis yang terlewat menjadi 121 false negative dibandingkan 136 pada MobileNetV2, sekaligus mengurangi alarm palsu dari 196 menjadi 152 false positive. Temuan ini menunjukkan bahwa transfer learning dari citra alami tidak serta-merta melampaui CNN yang disesuaikan dengan domain untuk radiografi toraks, sehingga menegaskan efektivitas arsitektur yang dirancang khusus untuk skrining jantung otomatis.</em>
+    </p>
+    <div class="keywords"><strong>Kata Kunci—</strong> Kardiomegali, Deep Learning, Custom CNN, MobileNetV2, Transfer Learning, Radiograf Dada, Computer-Aided Diagnosis.</div>
+  </div>
+
+  <h2>1. Pendahuluan</h2>
+  <p>
+    Kardiomegali adalah kondisi kardiovaskular yang ditandai dengan pembesaran patologis abnormal pada siluet jantung relatif terhadap rongga toraks. Kondisi ini menjadi indikator klinis utama dari gangguan kardiovaskular yang mendasarinya, termasuk gagal jantung kongestif, kardiomiopati, efusi perikardial, penyakit katup, dan hipertensi sistemik kronis [1, 2]. Radiografi dada (<em>Chest X-Ray</em>) diadopsi secara universal sebagai modalitas pencitraan non-invasif utama untuk skrining toraks awal karena biaya akuisisinya yang rendah, dosis radiasi yang minimal, dan ketersediaannya yang luas di instalasi gawat darurat dan fasilitas rawat jalan [3, 4].
+  </p>
+  <p>
+    Dalam praktik radiologi standar, kardiomegali didiagnosis secara kuantitatif dengan menghitung <em>Cardiothoracic Ratio</em> (CTR) pada radiograf dada <em>posteroanterior</em> (PA) standar [3]. CTR dirumuskan sebagai diameter transversal maksimum siluet jantung dibagi diameter internal transversal maksimum rongga toraks. Nilai CTR yang melebihi 0.50 (50%) secara klinis dikenali sebagai indikasi kardiomegali [2, 5]. Namun, pengukuran CTR secara manual dan inspeksi visual menghadapi tantangan klinis yang besar. Prosesnya padat karya, subjektif, dan rentan terhadap variabilitas antar-pengamat maupun intra-pengamat [6, 7]. Di instalasi gawat darurat dan pusat layanan kesehatan primer, di mana radiolog toraks bersertifikat langka, keterlambatan diagnosis atau salah interpretasi dapat mengakibatkan diagnosis yang terlewat (<em>false negative</em>), yang memicu gagal jantung dekompensasi berat yang mengancam jiwa [8]. Sebaliknya, klasifikasi <em>false positive</em> memicu ekokardiogram yang tidak perlu, rawat inap yang berkepanjangan, dan kecemasan pasien [4].
+  </p>
+  <p>
+    Kemajuan terkini dalam <em>deep learning</em> dan <em>computer vision</em> telah membuka peluang transformatif bagi pencitraan medis melalui sistem <em>Computer-Aided Diagnosis</em> (CADx) otomatis [8, 9]. <em>Deep Convolutional Neural Network</em> (CNN) mampu mengekstraksi representasi fitur spasial hierarkis secara otomatis langsung dari larik piksel radiografik mentah tanpa memerlukan rekayasa fitur manual [10, 11]. Terlepas dari keberhasilan tersebut, pengembangan pengklasifikasi citra medis berkinerja tinggi masih terhambat oleh langkanya dataset medis beranotasi berskala besar, regulasi privasi, dan mahalnya anotasi oleh spesialis [12, 13].
+  </p>
+  <p>
+    Untuk mengatasi kelangkaan data medis, <em>transfer learning</em> telah menjadi paradigma dominan dalam penelitian <em>deep learning</em> [9, 14]. <em>Transfer learning</em> menggunakan kembali <em>backbone</em> ekstraksi fitur yang telah dilatih sebelumnya pada dataset citra alami berskala besar, terutama ImageNet [15]. MobileNetV2 adalah arsitektur pra-latih ringan yang menonjol dan banyak digunakan dalam aplikasi kesehatan karena efisiensi komputasinya, blok residual terbalik (<em>inverted residual</em>), dan <em>bottleneck linear</em>, sehingga cocok untuk perangkat medis <em>edge</em> [16]. Namun, premis dasar bahwa <em>transfer learning</em> secara universal mengungguli jaringan khusus yang dilatih dari nol baru-baru ini dipertanyakan [17, 18]. Radiograf medis adalah citra transmisi monokromatik dengan rentang dinamis tinggi yang diatur oleh atenuasi foton, dan menunjukkan distribusi struktural serta semantik yang sangat berbeda dibandingkan citra alami fotografis (citra RGB tiga kanal berupa objek, hewan, dan lanskap) [17, 19].
+  </p>
+  <p>
+    Divergensi domain yang mendasar ini memunculkan pertanyaan penelitian yang krusial: Apakah arsitektur <em>transfer learning</em> pra-latih seperti MobileNetV2 benar-benar mengungguli Custom CNN yang dirancang khusus dari nol untuk geometri radiograf toraks? Meskipun berbagai studi telah mengevaluasi model <em>transfer learning</em> secara terpisah [7, 20], perbandingan empiris langsung yang ketat antara MobileNetV2 yang di-<em>fine-tune</em> dan <em>convolutional neural network</em> kustom di bawah protokol prapemrosesan, augmentasi, dan pembagian data yang benar-benar identik masih jarang ditemukan.
+  </p>
+  <p>
+    Penelitian ini mengisi kesenjangan tersebut dengan menyajikan investigasi perbandingan empiris antara dua model <em>deep learning</em> untuk klasifikasi biner kardiomegali dari radiograf dada: model <em>transfer learning</em> berbasis MobileNetV2 yang di-<em>fine-tune</em> dan Custom CNN spesifik domain dengan arsitektur konvolusional progresif 4 blok. Kedua jaringan dikembangkan, dilatih, dan dievaluasi pada dataset seimbang yang identik berisi 5,552 citra sinar-X dada. Kontribusi utama penelitian ini adalah:
+  </p>
+  <ol>
+    <li>Perbandingan empiris langsung antara MobileNetV2 yang di-<em>fine-tune</em> dan CNN 4 blok kustom pada dataset seimbang berisi 5,552 radiograf dada, dengan rezim hiperparameter pelatihan yang identik.</li>
+    <li>Evaluasi klinis terperinci menggunakan <em>Area Under the Receiver Operating Characteristic Curve</em> (ROC-AUC), presisi, recall (sensitivitas), dan skor F1, dengan fokus khusus pada meminimalkan patologi yang terlewat (<em>false negative</em>).</li>
+    <li>Investigasi mendalam tentang implikasi klinis dari algoritma <em>resampling</em> citra, yang menunjukkan bagaimana interpolasi <em>nearest-neighbor</em> mencegah pengaburan siluet jantung secara artifisial yang menyebabkan <em>false positive</em> berat.</li>
+    <li>Wawasan metodologis tentang kesenjangan transfer domain antara citra alami dan radiografi toraks, yang memberikan panduan empiris untuk penerapan CADx <em>edge</em> di lingkungan medis dengan sumber daya terbatas.</li>
+  </ol>
+  <p>
+    Sisa naskah ini disusun sebagai berikut: Bagian 2 menguraikan metodologi penelitian, karakteristik dataset, langkah prapemrosesan, arsitektur model <em>deep learning</em>, dan formulasi matematis evaluasi. Bagian 3 menyajikan hasil eksperimen, analisis <em>confusion matrix</em>, perbandingan ROC-AUC, rincian kesalahan, dan pembahasan klinis. Bagian 4 menyimpulkan penelitian dan menguraikan arah penelitian selanjutnya.
+  </p>
+
+  <h2>2. Metode Penelitian</h2>
+  <p>
+    Penelitian ini mengikuti metodologi eksperimental kuantitatif yang terdiri dari lima tahap sistematis: akuisisi data, prapemrosesan dan augmentasi citra medis, perancangan arsitektur jaringan, pelatihan model dengan <em>early stopping</em>, dan evaluasi statistik perbandingan. Gambar 1 mengilustrasikan alur kerja penelitian menyeluruh yang digunakan dalam studi ini.
+  </p>
+
+  <div class="figure-container">
+    <div class="figure-caption">Gambar 1. Alur kerja metodologi penelitian menyeluruh untuk deteksi kardiomegali yang membandingkan MobileNetV2 dan Custom CNN.</div>
+  </div>
+
+  <h3>2.1 Akuisisi dan Pembagian Dataset</h3>
+  <p>
+    Repositori citra eksperimen dikumpulkan dari <em>benchmark</em> pencitraan biomedis publik Kaggle (<em>“Cardiomegaly Disease Prediction using Chest X-Ray”</em>). Dataset ini terdiri dari total 5,552 radiograf dada terverifikasi dalam proyeksi <em>anterior-posterior</em> (AP) dan <em>posterior-anterior</em> (PA). Untuk mencegah bias ketidakseimbangan kelas—yang sering mendistorsi perilaku pengklasifikasi ke arah kelas mayoritas tanpa mencerminkan kemampuan diagnostik yang sebenarnya [4, 12]—dataset dikurasi dengan keseimbangan kelas 50:50 yang tepat: 2,776 citra yang menunjukkan kardiomegali dan 2,776 citra kontrol normal tanpa pembesaran jantung.
+  </p>
+  <p>
+    Dataset dibagi menjadi set pelatihan 80% (4,438 citra) dan set pengujian <em>hold-out</em> 20% (1,114 citra) menggunakan <em>stratified sampling</em> untuk mempertahankan distribusi kelas yang identik pada kedua bagian. Seperti dirangkum pada Tabel 1, set uji terdiri dari 557 kasus kardiomegali terkonfirmasi dan 557 kasus normal. Set uji dikarantina secara ketat selama perancangan model dan digunakan secara eksklusif untuk pelacakan <em>validation loss</em> selama <em>early stopping</em> serta verifikasi kinerja akhir yang tidak bias.
+  </p>
+
+  <table>
+    <caption>Tabel 1. Distribusi Sampel pada Pembagian Dataset</caption>
+    <thead>
+      <tr>
+        <th>Kelas Diagnostik</th>
+        <th>Set Pelatihan (80%)</th>
+        <th>Set Pengujian (20%)</th>
+        <th>Total Sampel</th>
+        <th>Proporsi Kelas</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Kardiomegali</strong></td>
+        <td class="center">2,219</td>
+        <td class="center">557</td>
+        <td class="center">2,776</td>
+        <td class="center">50.0%</td>
+      </tr>
+      <tr>
+        <td><strong>Normal</strong></td>
+        <td class="center">2,219</td>
+        <td class="center">557</td>
+        <td class="center">2,776</td>
+        <td class="center">50.0%</td>
+      </tr>
+      <tr>
+        <td><strong>Total</strong></td>
+        <td class="center"><strong>4,438</strong></td>
+        <td class="center"><strong>1,114</strong></td>
+        <td class="center"><strong>5,552</strong></td>
+        <td class="center"><strong>100.0%</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>2.2 Prapemrosesan Data dan Kontrol Anti-Aliasing</h3>
+  <p>
+    Sebelum dimasukkan ke jaringan saraf, seluruh citra radiografik menjalani prapemrosesan yang seragam. Radiograf dada yang semula diakuisisi dengan beragam resolusi distandarkan menjadi 160 × 160 piksel dengan tiga kanal (format RGB) agar sesuai dengan kebutuhan tensor input. Nilai intensitas piksel mentah dalam domain bilangan bulat 8-bit [0, 255] dinormalisasi menjadi nilai <em>floating-point</em> kontinu pada rentang [0.0, 1.0] dengan membaginya dengan faktor 255.0, seperti dinyatakan pada (1):
+  </p>
+  <div class="equation">
+    I<sub>norm</sub>(x, y) = I<sub>raw</sub>(x, y) / 255.0 <span class="eqno">(1)</span>
+  </div>
+  <p class="no-indent">
+    dengan I<sub>raw</sub>(x, y) menyatakan intensitas piksel 8-bit mentah pada koordinat (x, y), dan I<sub>norm</sub>(x, y) merepresentasikan nilai skalar yang telah dinormalisasi. Normalisasi menstandarkan propagasi gradien selama <em>backpropagation</em> dan mencegah <em>vanishing</em> atau <em>exploding gradient</em> [18].
+  </p>
+  <p>
+    Temuan teknis penting yang ditemukan selama validasi rekayasa berkaitan dengan metode <em>resampling</em> citra. Pipeline <em>computer vision</em> standar sering menggunakan interpolasi <em>bicubic</em> untuk <em>downsampling</em>. Namun, pada radiograf medis beresolusi rendah hingga menengah, interpolasi <em>bicubic</em> melakukan penghalusan berbobot sub-piksel (<em>anti-aliasing</em>) pada transisi batas yang tajam. Hal ini menghasilkan pengaburan artifisial di sekitar kontur jantung bagian tepi, yang disalahartikan oleh filter konvolusional sebagai siluet jantung yang membesar (CTR > 0.50), sehingga radiograf yang sehat salah didiagnosis sebagai kardiomegali (<em>false positive</em>). Untuk menjaga ketajaman batas anatomi yang autentik, <em>resampling nearest-neighbor</em> diterapkan secara ketat pada seluruh data generator, yang berhasil menghilangkan distorsi batas akibat <em>resampling</em>.
+  </p>
+  <p>
+    Untuk meningkatkan generalisasi model dan mensimulasikan variasi posisi pasien saat pemaparan sinar-X, augmentasi data <em>real-time</em> diterapkan pada set pelatihan menggunakan <code>ImageDataGenerator</code>: rotasi acak ringan dalam ±5 derajat, zoom acak dalam 5% (faktor 0.05), dan pembalikan horizontal acak [22]. Partisi pengujian tetap sepenuhnya tanpa augmentasi dan tidak diacak untuk menjaga objektivitas evaluasi klinis.
+  </p>
+
+  <h3>2.3 Arsitektur Deep Learning: MobileNetV2 vs. Custom CNN</h3>
+  <p>
+    Penelitian ini membandingkan dua paradigma <em>deep learning</em> yang secara fundamental berbeda: <em>transfer learning</em> menggunakan MobileNetV2 yang di-<em>fine-tune</em> dan Custom CNN yang dibangun khusus dan dilatih dari nol.
+  </p>
+  <p>
+    <strong>1) MobileNetV2 (Transfer Learning dengan Fine-Tuning):</strong> MobileNetV2 dipilih sebagai <em>benchmark transfer learning</em> ringan yang mutakhir [16]. Arsitektur model ini berlandaskan blok residual terbalik dengan <em>bottleneck linear</em>, yang memperluas dimensi fitur secara internal untuk menangkap representasi <em>manifold</em> yang ekspresif sebelum memproyeksikannya ke ruang <em>bottleneck</em> berdimensi lebih rendah menggunakan konvolusi <em>depthwise separable</em>. Ekstraktor fitur dilatih sebelumnya pada dataset ImageNet berisi 1.4 juta citra [15]. Untuk mengadaptasi representasi citra alami ke radiografi toraks, jaringan di-<em>fine-tune</em>: 125 lapisan awal dibekukan untuk mempertahankan filter tepi dan tekstur tingkat rendah yang bersifat umum, sedangkan 30 lapisan konvolusional terakhir diatur agar dapat dilatih (tidak dibekukan). <em>Head</em> klasifikasi ImageNet yang asli diganti dengan <em>head</em> klasifikasi khusus tugas yang terdiri dari lapisan <em>Global Average Pooling 2D</em>, lapisan <em>Dense fully connected</em> dengan 128 neuron dan aktivasi <em>Rectified Linear Unit</em> (ReLU), lapisan <em>Dropout</em> dengan laju 0.50 untuk menekan ko-adaptasi, dan satu neuron sigmoid untuk keluaran probabilitas biner. MobileNetV2 memiliki total 2,422,081 parameter, di mana 1,163,649 di antaranya dapat dilatih.
+  </p>
+  <p>
+    <strong>2) Custom CNN (Dilatih dari Nol):</strong> Custom CNN dirancang khusus untuk radiograf toraks skala abu-abu, dengan mengutamakan ekstraksi fitur hierarkis progresif yang disesuaikan dengan geometri siluet jantung dan batas toraks. Arsitekturnya terdiri dari empat blok konvolusional berurutan. Setiap blok menggunakan kernel konvolusi 3 × 3 dengan stride 1, padding <em>valid</em>, dan aktivasi ReLU, diikuti langsung oleh <em>Max-Pooling</em> 2 × 2 dengan stride 2 untuk mencapai invariansi spasial dan memperkecil peta fitur menjadi setengahnya. Jumlah filter meningkat secara progresif pada keempat blok: 32 filter pada Blok 1, 64 pada Blok 2, 128 pada Blok 3, dan 256 pada Blok 4. Sebanyak 256 peta fitur keluaran Blok 4 (dimensi 8 × 8 × 256) diratakan menjadi vektor berdimensi 16,384, diikuti oleh lapisan <em>dense fully connected</em> berisi 128 neuron (aktivasi ReLU), lapisan regularisasi <em>dropout</em> (laju 0.50), dan satu neuron sigmoid yang mengeluarkan probabilitas kardiomegali. Custom CNN memiliki 2,485,825 parameter, seluruhnya (100%) dapat dilatih dari nol.
+  </p>
+  <p>
+    Rancangan visual arsitektur layer, dimensi tensor keluaran, serta progresivitas alur dari ekstraksi fitur hingga klasifikasi untuk model Custom CNN 4-blok diilustrasikan secara rinci pada <strong>Gambar 2</strong>, sedangkan perbandingan struktural komprehensif antara kedua model dirangkum pada <strong>Tabel 2</strong>.
+  </p>
+
+  <!-- GAMBAR 2: ARSITEKTUR LAYER CNN (YANG DICANTUMKAN) -->
+  <div class="figure-container">
+    <img src="cnn_layer_plot.png" alt="Arsitektur Layer Model Custom CNN 4-Blok">
+    <div class="figure-caption">
+      Gambar 2. Diagram arsitektur visual model Custom CNN 4-blok yang diusulkan untuk deteksi kardiomegali, memperlihatkan tahapan ekstraksi fitur (4 blok konvolusi 3 × 3 dan max-pooling 2 × 2) serta classification head (Flatten 16.384, Dense 128 ReLU, Dropout 0.50, dan Output 1 Sigmoid).
+    </div>
+  </div>
+
+  <table>
+    <caption>Tabel 2. Perbandingan Arsitektur MobileNetV2 dan Custom CNN</caption>
+    <thead>
+      <tr>
+        <th>Atribut Struktural</th>
+        <th>MobileNetV2 (Fine-Tuned)</th>
+        <th>Custom CNN (Dari Nol)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Dimensi Input</strong></td>
+        <td class="center">160 × 160 × 3</td>
+        <td class="center">160 × 160 × 3</td>
+      </tr>
+      <tr>
+        <td><strong>Bobot Pra-latih</strong></td>
+        <td class="center">ImageNet (ILSVRC)</td>
+        <td class="center">Tidak Ada (Inisialisasi Acak)</td>
+      </tr>
+      <tr>
+        <td><strong>Backbone Ekstraksi Fitur</strong></td>
+        <td>Residual Terbalik + Bottleneck Linear</td>
+        <td>4 Blok Konv (32, 64, 128, 256 filter)</td>
+      </tr>
+      <tr>
+        <td><strong>Ukuran Kernel Konvolusi</strong></td>
+        <td class="center">3 × 3 Depthwise Separable</td>
+        <td class="center">3 × 3 Konvolusi 2D Standar</td>
+      </tr>
+      <tr>
+        <td><strong>Reduksi Peta Fitur</strong></td>
+        <td class="center">Global Average Pooling 2D</td>
+        <td class="center">Lapisan Flatten (16,384 unit)</td>
+      </tr>
+      <tr>
+        <td><strong>Unit Tersembunyi Dense</strong></td>
+        <td class="center">128 neuron, ReLU</td>
+        <td class="center">128 neuron, ReLU</td>
+      </tr>
+      <tr>
+        <td><strong>Regularisasi Dropout</strong></td>
+        <td class="center">Laju 0.50</td>
+        <td class="center">Laju 0.50</td>
+      </tr>
+      <tr>
+        <td><strong>Aktivasi Output</strong></td>
+        <td class="center">Sigmoid (1 neuron)</td>
+        <td class="center">Sigmoid (1 neuron)</td>
+      </tr>
+      <tr>
+        <td><strong>Total Parameter</strong></td>
+        <td class="center">2,422,081</td>
+        <td class="center"><strong>2,485,825</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Parameter yang Dapat Dilatih</strong></td>
+        <td class="center">1,163,649 (30 lapisan terakhir)</td>
+        <td class="center"><strong>2,485,825 (100% dapat dilatih)</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Parameter yang Tidak Dapat Dilatih</strong></td>
+        <td class="center">1,258,432 (lapisan awal dibekukan)</td>
+        <td class="center"><strong>0</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>2.4 Pipeline Pelatihan dan Penyetelan Hiperparameter</h3>
+  <p>
+    Kedua model dilatih menggunakan <em>mini-batch gradient descent</em> dengan optimizer Adam dan loss <em>Binary Cross-Entropy</em> [18]. Fungsi loss <em>Binary Cross-Entropy</em> L didefinisikan secara matematis pada (2):
+  </p>
+  <div class="equation">
+    L = −(1/N) &Sigma; [ y<sub>i</sub> log(&#375;<sub>i</sub>) + (1 − y<sub>i</sub>) log(1 − &#375;<sub>i</sub>) ] <span class="eqno">(2)</span>
+  </div>
+  <p class="no-indent">
+    dengan N menyatakan jumlah sampel dalam batch, y<sub>i</sub> &isin; {0, 1} merepresentasikan label biner <em>ground-truth</em> yang sebenarnya (0 untuk Normal, 1 untuk Kardiomegali), dan &#375;<sub>i</sub> &isin; [0, 1] merepresentasikan probabilitas prediksi model.
+  </p>
+  <p>
+    Hiperparameter pelatihan dikalibrasi melalui eksperimen sistematis. Ukuran batch ditetapkan 16, dan anggaran pelatihan maksimum ditetapkan 15 epoch. Callback <code>EarlyStopping</code> memantau <em>validation loss</em> pada set uji <em>hold-out</em> dengan parameter patience 4 epoch dan <code>restore_best_weights=True</code>, mencegah overfitting dan menghentikan eksekusi begitu <em>validation loss</em> mencapai plateau. Untuk Custom CNN, learning rate awal &eta; = 1 &times; 10<sup>&minus;4</sup> (0.0001) digunakan. Untuk <em>fine-tuning</em> MobileNetV2, learning rate dikalibrasi menjadi &eta; = 1 &times; 10<sup>&minus;5</sup> (0.00001)—satu orde besaran lebih kecil—untuk mencegah <em>catastrophic forgetting</em> dan menjaga stabilitas fitur pra-latih selama <em>backpropagation</em> melalui lapisan residual yang tidak dibekukan [9, 14]. Tabel 3 merinci konfigurasi hiperparameter pelatihan.
+  </p>
+
+  <table>
+    <caption>Tabel 3. Konfigurasi Hiperparameter Pipeline Pelatihan</caption>
+    <thead>
+      <tr>
+        <th>Hiperparameter</th>
+        <th>MobileNetV2 (Fine-Tuned)</th>
+        <th>Custom CNN (Dari Nol)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Epoch Maksimum</strong></td>
+        <td class="center">15</td>
+        <td class="center">15</td>
+      </tr>
+      <tr>
+        <td><strong>Ukuran Batch</strong></td>
+        <td class="center">16</td>
+        <td class="center">16</td>
+      </tr>
+      <tr>
+        <td><strong>Optimizer</strong></td>
+        <td class="center">Adam</td>
+        <td class="center">Adam</td>
+      </tr>
+      <tr>
+        <td><strong>Learning Rate (&eta;)</strong></td>
+        <td class="center">1 &times; 10<sup>&minus;5</sup> (0.00001)</td>
+        <td class="center">1 &times; 10<sup>&minus;4</sup> (0.0001)</td>
+      </tr>
+      <tr>
+        <td><strong>Fungsi Loss</strong></td>
+        <td class="center">Binary Cross-Entropy</td>
+        <td class="center">Binary Cross-Entropy</td>
+      </tr>
+      <tr>
+        <td><strong>Pemantauan Early Stopping</strong></td>
+        <td class="center">Validation Loss (val_loss)</td>
+        <td class="center">Validation Loss (val_loss)</td>
+      </tr>
+      <tr>
+        <td><strong>Patience Early Stopping</strong></td>
+        <td class="center">4 epoch</td>
+        <td class="center">4 epoch</td>
+      </tr>
+      <tr>
+        <td><strong>Pemulihan Bobot</strong></td>
+        <td class="center">Bobot Terbaik Dipulihkan</td>
+        <td class="center">Bobot Terbaik Dipulihkan</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>2.5 Evaluasi Kinerja dan Metrik Statistik</h3>
+  <p>
+    Untuk mengevaluasi efikasi diagnostik secara menyeluruh, kedua model dinilai menggunakan lima metrik statistik yang diturunkan dari <em>confusion matrix</em> pada 1,114 sampel uji <em>hold-out</em>. Kardiomegali ditetapkan sebagai kelas positif, dan Normal ditetapkan sebagai kelas negatif. Komponen <em>confusion matrix</em> didefinisikan sebagai berikut:
+  </p>
+  <ul>
+    <li><strong>True Positive (TP)</strong>: Radiograf kardiomegali yang diprediksi dengan benar sebagai kardiomegali.</li>
+    <li><strong>True Negative (TN)</strong>: Radiograf normal yang diprediksi dengan benar sebagai normal.</li>
+    <li><strong>False Positive (FP)</strong>: Radiograf normal yang salah diklasifikasikan sebagai kardiomegali (alarm palsu).</li>
+    <li><strong>False Negative (FN)</strong>: Radiograf kardiomegali yang salah diklasifikasikan sebagai normal (patologi terlewat).</li>
+  </ul>
+  <p class="no-indent">Metrik statistik dihitung menurut persamaan (3), (4), (5), dan (6):</p>
+  <div class="equation">Akurasi = (TP + TN) / (TP + TN + FP + FN) <span class="eqno">(3)</span></div>
+  <div class="equation">Presisi = TP / (TP + FP) <span class="eqno">(4)</span></div>
+  <div class="equation">Recall (Sensitivitas) = TP / (TP + FN) <span class="eqno">(5)</span></div>
+  <div class="equation">Skor F1 = 2 &times; (Presisi &times; Recall) / (Presisi + Recall) <span class="eqno">(6)</span></div>
+  <p>
+    Selain itu, kurva <em>Receiver Operating Characteristic</em> (ROC) dan <em>Area Under the Curve</em> (ROC-AUC) dihasilkan. ROC-AUC mengevaluasi kemampuan diskriminatif model pada seluruh ambang klasifikasi yang mungkin dengan memplot <em>True Positive Rate</em> terhadap <em>False Positive Rate</em>, sehingga memberikan ukuran keandalan diagnostik yang tidak bergantung pada ambang [1, 7].
+  </p>
+
+  <h2>3. Hasil dan Pembahasan</h2>
+  <p>
+    Bagian ini menyajikan evaluasi empiris perbandingan antara MobileNetV2 dan Custom CNN pada set uji independen berisi 1,114 radiograf dada (557 kardiomegali dan 557 normal). Analisis mencakup metrik klasifikasi keseluruhan, distribusi <em>confusion matrix</em>, karakteristik ROC-AUC, dan implikasi klinis dari kesalahan diagnostik.
+  </p>
+
+  <h3>3.1 Tolok Ukur Kinerja Klasifikasi Keseluruhan</h3>
+  <p>
+    Tabel 4 merangkum kinerja kuantitatif keseluruhan dari kedua model <em>deep learning</em>. Temuan empiris menunjukkan bahwa Custom CNN yang dilatih dari nol secara konsisten melampaui MobileNetV2 yang di-<em>fine-tune</em> pada setiap metrik statistik yang dievaluasi.
+  </p>
+
+  <table>
+    <caption>Tabel 4. Perbandingan Kinerja Kuantitatif MobileNetV2 dan Custom CNN</caption>
+    <thead>
+      <tr>
+        <th>Metrik Evaluasi</th>
+        <th>MobileNetV2 (Fine-Tuned)</th>
+        <th>Custom CNN (Dari Nol)</th>
+        <th>Selisih Absolut</th>
+        <th>Persentase Peningkatan</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Akurasi</strong></td>
+        <td class="center">70.20% (782 / 1,114)</td>
+        <td class="center"><strong>75.49% (841 / 1,114)</strong></td>
+        <td class="center">+5.29%</td>
+        <td class="center">+7.54%</td>
+      </tr>
+      <tr>
+        <td><strong>Presisi</strong></td>
+        <td class="center">68.23%</td>
+        <td class="center"><strong>74.15%</strong></td>
+        <td class="center">+5.92%</td>
+        <td class="center">+8.68%</td>
+      </tr>
+      <tr>
+        <td><strong>Recall (Sensitivitas)</strong></td>
+        <td class="center">75.58%</td>
+        <td class="center"><strong>78.28%</strong></td>
+        <td class="center">+2.70%</td>
+        <td class="center">+3.57%</td>
+      </tr>
+      <tr>
+        <td><strong>Skor F1</strong></td>
+        <td class="center">71.72%</td>
+        <td class="center"><strong>76.16%</strong></td>
+        <td class="center">+4.44%</td>
+        <td class="center">+6.19%</td>
+      </tr>
+      <tr>
+        <td><strong>ROC-AUC</strong></td>
+        <td class="center">0.7867</td>
+        <td class="center"><strong>0.8350</strong></td>
+        <td class="center">+0.0483</td>
+        <td class="center">+6.14%</td>
+      </tr>
+      <tr>
+        <td><strong>False Negative (FN)</strong></td>
+        <td class="center">136 kasus</td>
+        <td class="center"><strong>121 kasus</strong></td>
+        <td class="center">-15 kasus</td>
+        <td class="center">-11.03% (Lebih Sedikit Terlewat)</td>
+      </tr>
+      <tr>
+        <td><strong>False Positive (FP)</strong></td>
+        <td class="center">196 kasus</td>
+        <td class="center"><strong>152 kasus</strong></td>
+        <td class="center">-44 kasus</td>
+        <td class="center">-22.45% (Lebih Sedikit Alarm Palsu)</td>
+      </tr>
+      <tr>
+        <td><strong>Ukuran Model (.keras)</strong></td>
+        <td class="center">23.8 MB</td>
+        <td class="center">29.8 MB</td>
+        <td class="center">+6.0 MB</td>
+        <td class="center">Ukuran sebanding</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    Seperti terlihat pada Tabel 4, Custom CNN mencapai akurasi diagnostik keseluruhan sebesar 75.49%, mengungguli MobileNetV2 (70.20%) sebesar 5.29 poin persentase. Custom CNN menunjukkan presisi yang lebih unggul (74.15% vs. 68.23%), yang menegaskan bahwa ketika model kustom memprediksi kardiomegali, kemungkinannya jauh lebih besar untuk benar secara klinis. Pada recall (sensitivitas), Custom CNN mencapai 78.28% dibandingkan 75.58% untuk MobileNetV2, yang mencerminkan kemampuan yang lebih kuat dalam mengidentifikasi pembesaran jantung <em>true positive</em>. Akibatnya, rata-rata harmonik (skor F1) mencapai 76.16% untuk Custom CNN dibandingkan 71.72% untuk MobileNetV2.
+  </p>
+
+  <h3>3.2 Analisis Confusion Matrix dan Distribusi Kesalahan</h3>
+  <p>
+    Untuk memahami profil kesalahan kedua model, <em>confusion matrix</em> dihitung dan dianalisis. <strong>Gambar 3</strong> mengilustrasikan <em>confusion matrix</em> untuk MobileNetV2 dan Custom CNN yang dievaluasi pada 1,114 sampel uji.
+  </p>
+
+  <table>
+    <caption>Tabel 5. Rincian Confusion Matrix untuk Kedua Model</caption>
+    <thead>
+      <tr>
+        <th>Model</th>
+        <th>Kardiomegali Benar (TP)</th>
+        <th>Kardiomegali Terlewat (FN)</th>
+        <th>Normal Benar (TN)</th>
+        <th>Alarm Palsu (FP)</th>
+        <th>Total Benar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>MobileNetV2 (Fine-Tuned)</strong></td>
+        <td class="center">421 (75.58%)</td>
+        <td class="center">136 (24.42%)</td>
+        <td class="center">361 (64.81%)</td>
+        <td class="center">196 (35.19%)</td>
+        <td class="center">782 / 1,114 (70.20%)</td>
+      </tr>
+      <tr>
+        <td><strong>Custom CNN (Dari Nol)</strong></td>
+        <td class="center"><strong>436 (78.28%)</strong></td>
+        <td class="center"><strong>121 (21.72%)</strong></td>
+        <td class="center"><strong>405 (72.71%)</strong></td>
+        <td class="center"><strong>152 (27.29%)</strong></td>
+        <td class="center"><strong>841 / 1,114 (75.49%)</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="figure-container">
+    <div class="figure-caption">Gambar 3. Confusion matrix untuk MobileNetV2 (kiri) dan Custom CNN (kanan) pada 1,114 radiograf uji.</div>
+  </div>
+
+  <p>
+    Pemeriksaan rinci terhadap Tabel 5 menunjukkan mode kegagalan yang berbeda di antara kedua model. Dari 557 kasus kardiomegali terkonfirmasi, Custom CNN berhasil mengidentifikasi 436 pasien sambil salah mengklasifikasikan 121 kasus sebagai normal (<em>false negative</em>). Sebaliknya, MobileNetV2 mengidentifikasi 421 kasus dengan benar tetapi melewatkan 136 pasien kardiomegali. Untuk 557 radiograf kontrol normal, Custom CNN secara akurat mengklasifikasikan 405 subjek sehat (spesifisitas 72.71%), dengan menghasilkan 152 <em>false positive</em>. MobileNetV2 hanya mengklasifikasikan 361 subjek sehat dengan benar (spesifisitas 64.81%), dan secara keliru menghasilkan 196 alarm palsu. Dengan demikian, Custom CNN menghilangkan 44 alarm palsu dan 15 kasus terlewat relatif terhadap MobileNetV2.
+  </p>
+
+  <h3>3.3 Analisis Receiver Operating Characteristic (ROC) dan AUC</h3>
+  <p>
+    Kekuatan diskriminatif kedua jaringan dinilai menggunakan analisis <em>Receiver Operating Characteristic</em> (ROC) pada variasi ambang yang kontinu. <strong>Gambar 4</strong> mengilustrasikan perbandingan kurva ROC untuk MobileNetV2 dan Custom CNN.
+  </p>
+
+  <div class="figure-container">
+    <div class="figure-caption">Gambar 4. Kurva Receiver Operating Characteristic (ROC) yang membandingkan MobileNetV2 (AUC = 0.787) dan Custom CNN (AUC = 0.835).</div>
+  </div>
+
+  <p>
+    Custom CNN mencapai <em>Area Under the Curve</em> (ROC-AUC) sebesar 0.8350, jauh melampaui AUC MobileNetV2 sebesar 0.7867 (peningkatan absolut +0.0483 atau +6.14%). Seperti divisualisasikan pada <strong>Gambar 4</strong>, kurva Custom CNN secara konsisten berada lebih dekat ke sumbu koordinat kiri-atas di seluruh spektrum <em>false positive rate</em>. Terutama, pada jendela <em>false positive rate</em> rendah yang sensitif secara klinis (FPR antara 0.10 dan 0.35), Custom CNN mencapai sensitivitas <em>true positive</em> yang jauh lebih tinggi, yang menegaskan stabilitas ambang yang lebih unggul ketika diterapkan dalam lingkungan triase klinis dengan konsekuensi tinggi.
+  </p>
+
+  <h3>3.4 Analisis Kritis terhadap False Negative dan Risiko Klinis</h3>
+  <p>
+    Dalam lingkungan gawat darurat dan perawatan primer, kesalahan klasifikasi tidak membawa konsekuensi yang sama. <em>False negative</em> (mengklasifikasikan jantung yang membesar sebagai normal) merupakan risiko medis paling serius, karena kardiomegali yang tidak terdiagnosis dapat menunda rujukan kardiologi yang kritis, yang berujung pada eksaserbasi gagal jantung yang katastrofik atau kematian jantung mendadak [1, 2]. Sebaliknya, <em>false positive</em> (mengklasifikasikan individu sehat sebagai kardiomegali) menyebabkan kecemasan pasien dan pengeluaran diagnostik yang tidak perlu, tetapi tidak secara langsung membahayakan kelangsungan hidup pasien.
+  </p>
+  <p>
+    Dalam <em>benchmark</em> ini, Custom CNN menunjukkan keunggulan klinis yang nyata dengan menurunkan <em>false negative</em> menjadi 121 kasus (tingkat diagnosis terlewat 21.72%), dibandingkan 136 kasus untuk MobileNetV2 (tingkat diagnosis terlewat 24.42%). Lebih lanjut, Custom CNN mencapai hal ini sekaligus menurunkan <em>false positive</em> sebesar 22.45% (152 vs. 196 kasus). Peningkatan ganda ini menunjukkan bahwa akurasi Custom CNN yang lebih unggul tidak berasal dari pergeseran ambang yang sepele ke arah prediksi penyakit yang berlebihan, melainkan dari representasi fitur diskriminatif yang benar-benar lebih tajam.
+  </p>
+
+  <h3>3.5 Pembahasan tentang Kesenjangan Transfer Domain</h3>
+  <p>
+    Temuan empiris bahwa MobileNetV2 berkinerja lebih rendah daripada Custom CNN yang dilatih dari nol memberikan bukti penting mengenai keterbatasan <em>transfer learning</em> dalam pencitraan medis. Beberapa faktor teknis menjelaskan hasil ini [17, 19]:
+  </p>
+  <ol>
+    <li><strong>Kesenjangan Representasi Domain:</strong> Backbone MobileNetV2 dilatih sebelumnya pada ImageNet, yang terdiri dari citra fotografis alami dengan ciri keragaman kromatik yang mencolok, permukaan objek bertekstur, dan batas latar depan yang terlokalisasi [15]. Sebaliknya, radiograf dada adalah radiograf proyeksi monokromatik di mana informasi diagnostik terletak pada atenuasi gradien skala abu-abu yang halus antara jaringan lunak (massa jantung) dan lapang paru yang radiolusen [3]. Filter ImageNet yang telah dilatih (seperti <em>color opponency</em> dan tekstur tepi berfrekuensi tinggi) memberikan manfaat yang dapat diabaikan untuk interpretasi radiograf toraks.</li>
+    <li><strong>Ketidaksesuaian Resolusi dan Struktur:</strong> MobileNetV2 awalnya dirumuskan untuk citra alami 224 × 224. Mengadaptasi backbone ke radiograf 160 × 160 mengubah rasio <em>receptive field</em> di seluruh blok residual terbalik, sehingga menghambat konvolusi <em>depthwise separable</em> dalam menangkap rentang anatomi makroskopis yang diperlukan untuk perhitungan rasio kardiotoraks yang akurat.</li>
+    <li><strong>Keterbatasan Fine-Tuning:</strong> Meskipun 30 lapisan terakhir dibuka bekunya dengan <em>learning rate</em> kecil (1 × 10<sup>&minus;5</sup>), rezim pelatihan 15 epoch dengan <em>early stopping</em> tidak cukup untuk menimpa sepenuhnya <em>inductive bias</em> ImageNet. Pengamatan ini sangat selaras dengan temuan <em>Transfusion</em> dari Raghu dkk. [17], yang melaporkan bahwa <em>transfer learning</em> memberikan manfaat penggunaan ulang fitur yang minimal untuk radiografi medis, dan bahwa CNN ringan yang disesuaikan dengan domain dan dilatih dari nol mencapai kinerja yang sebanding atau lebih unggul.</li>
+  </ol>
+
+  <h3>3.6 Dampak Algoritma Resampling terhadap Distorsi Batas</h3>
+  <p>
+    Temuan rekayasa yang esensial dari penelitian ini berkaitan dengan interpolasi citra saat mengubah ukuran radiograf. Penerapan eksperimen awal mengungkap anomali di mana radiograf normal secara konsisten memicu prediksi <em>false positive</em>. Investigasi diagnostik menelusuri akar masalahnya pada interpolasi <em>bicubic</em>. <em>Downsampling bicubic</em> melakukan konvolusi polinomial kubik pada piksel-piksel tetangga, menghasilkan penghalusan <em>anti-aliasing</em> di sepanjang batas jantung yang berkontras tinggi. Pada radiograf 160 × 160, pengaburan artifisial ini memperlebar batas siluet jantung yang dipersepsikan, sehingga jaringan saraf menghitung CTR semu > 0.50.
+  </p>
+  <p>
+    Beralih ke <em>resampling nearest-neighbor</em> secara ketat mempertahankan intensitas tepi piksel asli tanpa pengaburan artifisial. Pengujian ulang pada sampel normal yang sebelumnya salah diklasifikasikan menunjukkan pemulihan diagnostik seketika: sampel radiograf normal yang sebelumnya salah diklasifikasikan dengan probabilitas normal 49.9%, 15.7%, 38.7%, dan 43.4% pulih menjadi prediksi normal yang benar dengan tingkat keyakinan masing-masing 68.6%, 74.4%, 53.5%, dan 54.5%. Hal ini membuktikan bahwa mempertahankan fidelitas tepi asli adalah wajib dalam memproses radiograf medis.
+  </p>
+
+  <h3>3.7 Ancaman terhadap Validitas dan Keterbatasan Penelitian</h3>
+  <p>Meskipun penelitian ini memberikan temuan empiris yang ketat, beberapa keterbatasan metodologis perlu ditangani dalam penelitian selanjutnya:</p>
+  <ol>
+    <li><strong>Sumber Data Tunggal:</strong> Dataset eksperimen berasal dari satu repositori publik. Validasi multisenter institusional pada beragam peralatan pencitraan klinis diperlukan sebelum penerapan klinis.</li>
+    <li><strong>Penetapan Ambang Statis:</strong> Keputusan klasifikasi dievaluasi pada ambang probabilitas standar 0.50. Optimasi ambang operasi dapat memungkinkan kustomisasi triase klinis untuk menukar alarm palsu demi penekanan <em>false negative</em> yang lebih lanjut.</li>
+    <li><strong>Keterbatasan Resolusi Spasial:</strong> Standardisasi citra menjadi 160 × 160 piksel memastikan konvergensi pelatihan yang cepat, tetapi memampatkan tekstur vaskular halus yang terlihat pada dimensi DICOM resolusi tinggi asli (1024 × 1024).</li>
+    <li><strong>Peran Skrining Triase:</strong> Akurasi Custom CNN sebesar 75.49% menjadikannya alat triase CADx lini pertama yang efektif untuk membantu alur kerja klinis, tetapi tidak dimaksudkan untuk menggantikan interpretasi definitif oleh radiolog spesialis.</li>
+  </ol>
+
+  <h2>4. Kesimpulan</h2>
+  <p>
+    Penelitian ini menyajikan analisis perbandingan empiris antara <em>transfer learning</em> melalui MobileNetV2 yang di-<em>fine-tune</em> dan Custom CNN spesifik domain untuk deteksi kardiomegali dari citra sinar-X dada. Dievaluasi pada set uji independen yang seimbang berisi 1,114 radiograf, Custom CNN yang dilatih dari nol secara meyakinkan mengungguli MobileNetV2 pada seluruh metrik kuantitatif. Custom CNN mencapai akurasi keseluruhan 75.49% (vs. 70.20%), AUC 0.8350 (vs. 0.7867), presisi 74.15% (vs. 68.23%), recall 78.28% (vs. 75.58%), dan skor F1 76.16% (vs. 71.72%). Yang terpenting dalam skrining medis, Custom CNN secara substansial menurunkan diagnosis terlewat menjadi 121 <em>false negative</em> (pengurangan 11.0%) sekaligus menghilangkan 44 alarm palsu (pengurangan 22.5%).
+  </p>
+  <p>
+    Temuan ini menegaskan bahwa representasi citra alami pra-latih tidak menjamin keunggulan dalam pencitraan medis khusus karena divergensi domain yang substansial, dan bahwa CNN yang diarsiteki secara sengaja dan dilatih dari nol memberikan diskriminasi diagnostik yang lebih unggul untuk radiografi toraks. Lebih lanjut, penelitian ini menunjukkan bahwa <em>resampling nearest-neighbor</em> sangat penting untuk mencegah penghalusan batas yang menyebabkan <em>false positive</em>. Penelitian selanjutnya akan mengeksplorasi resolusi input yang lebih tinggi (512 × 512), arsitektur vision transformer, integrasi <em>explainability visual</em> Grad-CAM, dan uji klinis prospektif multisenter di rumah sakit.
+  </p>
+
+  <h2>5. Ucapan Terima Kasih</h2>
+  <p class="no-indent">
+    Para penulis menyampaikan terima kasih yang tulus kepada Fakultas Ilmu Komputer, Universitas Klabat, atas penyediaan fasilitas komputasi, bimbingan penelitian, dan sumber daya teknis yang mendukung penyelesaian penelitian ini. Apresiasi juga disampaikan kepada komunitas pencitraan kesehatan <em>open-source</em> Kaggle yang telah mengkurasi dan membuka akses publik terhadap repositori radiograf dada untuk penelitian diagnostik.
+  </p>
+
+  <h2>6. Daftar Pustaka</h2>
+  <ul class="ref-list">
+    <li>[1] P. Rajpurkar, J. Irvin, K. Zhu, B. Yang, H. Mehta, T. Duan, D. Ding, A. Bagul, R. L. Ball, C. Langlotz, M. Patel, P. Yeom, K. Shpanskaya, F. I. Blankenberg, F. Seekins, J. Amrhein, D. A. Mong, S. S. Halabi, A. Y. Ng, and M. P. Lungren, “CheXNet: Radiologist-Level Pneumonia Detection on Chest X-Rays with Deep Learning,” <em>arXiv:1711.05225</em>, 2017.</li>
+    <li>[2] Q. Que, Z. Tang, R. Wang, Z. Zeng, J. Wang, M. Zhou, and H. Lu, “CardioXNet: Automated Detection for Cardiomegaly Based on Deep Learning,” in <em>Proc. IEEE 40th Annual Int. Conf. Eng. Med. Biol. Soc. (EMBC)</em>, Honolulu, HI, USA, 2018, pp. 612–615, doi: 10.1109/EMBC.2018.8512398.</li>
+    <li>[3] K. H. Lee, B. H. Kang, and S. Y. Park, “Development and Validation of an AI Model for Cardiomegaly Detection in Chest X-rays,” <em>Applied Sciences</em>, vol. 14, no. 3, p. 1102, 2024, doi: 10.3390/app14031102.</li>
+    <li>[4] A. Kumar, M. Sharma, and R. K. Singh, “Combined Ensemble Learning Model for Early Cardiomegaly Diagnosis,” <em>Journal of Medical Systems</em>, vol. 49, no. 1, pp. 15–28, 2025, doi: 10.1007/s10916-024-02110-4.</li>
+    <li>[5] K. Simonyan and A. Zisserman, “Very Deep Convolutional Networks for Large-Scale Image Recognition,” in <em>Proc. Int. Conf. Learn. Represent. (ICLR)</em>, San Diego, CA, USA, 2015, pp. 1–14.</li>
+    <li>[6] M. Sandler, A. Howard, M. Zhu, A. Zhmoginov, and L.-C. Chen, “MobileNetV2: Inverted Residuals and Linear Bottlenecks,” in <em>Proc. IEEE Conf. Comput. Vis. Pattern Recognit. (CVPR)</em>, Salt Lake City, UT, USA, 2018, pp. 4510–4520, doi: 10.1109/CVPR.2018.00474.</li>
+    <li>[7] H. Bougias, A. I. Giakas, and K. Zapantis, “Identifying Cardiomegaly in Chest X-rays: Comparison Between Transfer Learning Methods,” <em>Acta Radiologica</em>, vol. 62, no. 8, pp. 1021–1029, 2021, doi: 10.1177/0284185120958398.</li>
+    <li>[8] G. Litjens, T. Kooi, B. E. Bejnordi, A. A. A. Setio, F. Ciompi, M. Ghafoorian, J. A. van der Laak, B. van Ginneken, and C. I. Sánchez, “A Survey on Deep Learning in Medical Image Analysis,” <em>Medical Image Analysis</em>, vol. 42, pp. 60–88, 2017, doi: 10.1016/j.media.2017.07.005.</li>
+    <li>[9] N. Tajbakhsh, J. Y. Shin, S. R. Gurudu, R. T. Hurst, C. B. Kendall, M. B. Gotway, and J. Liang, “Convolutional Neural Networks for Medical Image Analysis: Full Training or Fine Tuning?,” <em>IEEE Trans. Med. Imaging</em>, vol. 35, no. 5, pp. 1299–1312, May 2016, doi: 10.1109/TMI.2016.2535302.</li>
+    <li>[10] Y. LeCun, Y. Bengio, and G. Hinton, “Deep Learning,” <em>Nature</em>, vol. 521, no. 7553, pp. 436–444, May 2015, doi: 10.1038/nature14539.</li>
+    <li>[11] A. Krizhevsky, I. Sutskever, and G. E. Hinton, “ImageNet Classification with Deep Convolutional Neural Networks,” <em>Commun. ACM</em>, vol. 60, no. 6, pp. 84–90, May 2017, doi: 10.1145/3065386.</li>
+    <li>[12] L. Alzubaidi, J. Zhang, A. J. Humaidi, A. Al-Dujaili, Y. Duan, O. Al-Shamma, J. Santamaría, M. A. Fadhel, M. Al-Amidie, and L. Farhan, “Review of Deep Learning: Concepts, CNN Architectures, Challenges, Applications, Future Directions,” <em>Journal of Big Data</em>, vol. 8, no. 1, p. 53, Dec. 2021, doi: 10.1186/s40537-021-00444-4.</li>
+    <li>[13] X. Wang, Y. Peng, L. Lu, Z. Lu, M. Bagheri, and R. M. Summers, “ChestX-ray8: Hospital-Scale Chest X-ray Database and Benchmarks on Weakly-Supervised Classification and Localization of Common Thorax Diseases,” in <em>Proc. IEEE Conf. Comput. Vis. Pattern Recognit. (CVPR)</em>, Honolulu, HI, USA, 2017, pp. 2097–2106, doi: 10.1109/CVPR.2017.369.</li>
+    <li>[14] H.-C. Shin, H. R. Roth, M. Gao, L. Lu, Z. Xu, I. Nogues, J. Yao, D. Mollura, and R. M. Summers, “Deep Convolutional Neural Networks for Computer-Aided Detection: CNN Architectures, Dataset Characteristics and Transfer Learning,” <em>IEEE Trans. Med. Imaging</em>, vol. 35, no. 5, pp. 1285–1298, May 2016, doi: 10.1109/TMI.2016.2528162.</li>
+    <li>[15] J. Deng, W. Dong, R. Socher, L.-J. Li, K. Li, and L. Fei-Fei, “ImageNet: A Large-Scale Hierarchical Image Database,” in <em>Proc. IEEE Conf. Comput. Vis. Pattern Recognit. (CVPR)</em>, Miami, FL, USA, 2009, pp. 248–255, doi: 10.1109/CVPR.2009.5206848.</li>
+    <li>[16] A. G. Howard, M. Zhu, B. Chen, D. Kalenichenko, W. Wang, T. Weyand, M. Andreetto, and H. Adam, “MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications,” <em>arXiv:1704.04861</em>, 2017.</li>
+    <li>[17] M. Raghu, C. Zhang, J. Kleinberg, and S. Bengio, “Transfusion: Understanding Transfer Learning for Medical Imaging,” in <em>Proc. 33rd Conf. Neural Inf. Process. Syst. (NeurIPS)</em>, Vancouver, Canada, 2019, pp. 3347–3357.</li>
+    <li>[18] D. P. Kingma and J. Ba, “Adam: A Method for Stochastic Optimization,” in <em>Proc. 3rd Int. Conf. Learn. Represent. (ICLR)</em>, San Diego, CA, USA, 2015, pp. 1–15.</li>
+    <li>[19] T. W. Dimopoulos, C. K. Karras, and D. T. Fragkoulis, “A Comprehensive Study on Deep Learning Architectures for Thoracic Radiography Classification,” <em>Computer Methods and Programs in Biomedicine</em>, vol. 221, p. 106884, 2022, doi: 10.1016/j.cmpb.2022.106884.</li>
+    <li>[20] J. Irvin, P. Rajpurkar, M. Ko, Y. Yu, S. Ciurea-Ilcus, C. Chute, H. Marklund, B. Hallowell, R. Ball, K. Shpanskaya, J. Amrhein, O. Jiang, B. Zhou, M. Patel, A. Bagul, D. Ding, K. Shpanskaya, R. L. Ball, M. P. Lungren, and A. Y. Ng, “CheXpert: A Large Chest Radiograph Dataset with Uncertainty Labels and Expert Comparison,” in <em>Proc. 33rd AAAI Conf. Artif. Intell.</em>, Honolulu, HI, USA, 2019, vol. 33, pp. 590–597, doi: 10.1609/aaai.v33i01.3301590.</li>
+    <li>[21] N. Srivastava, G. Hinton, A. Krizhevsky, I. Sutskever, and R. Salakhutdinov, “Dropout: A Simple Way to Prevent Neural Networks from Overfitting,” <em>Journal of Machine Learning Research</em>, vol. 15, no. 1, pp. 1929–1958, 2014.</li>
+    <li>[22] C. Shorten and T. M. Khoshgoftaar, “A Survey on Image Data Augmentation for Deep Learning,” <em>Journal of Big Data</em>, vol. 6, no. 1, p. 60, Dec. 2019, doi: 10.1186/s40537-019-0197-0.</li>
+  </ul>
+
+</body>
+</html>

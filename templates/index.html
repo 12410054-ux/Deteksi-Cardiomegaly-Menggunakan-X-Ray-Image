@@ -31,7 +31,15 @@
         <div class="result-content" id="result-content" hidden>
           <div class="result-image-wrap"><img id="result-image" alt="Citra rontgen yang dianalisis"><div class="image-chip"><span class="live-dot"></span> CITRA DIANALISIS</div></div>
           <div class="diagnosis-line"><div><span class="result-label">HASIL PREDIKSI</span><h3 id="diagnosis">—</h3></div><div class="confidence"><span id="confidence">—</span><small>KEYAKINAN</small></div></div>
-          <div class="probability-block"><div class="probability-heading"><span>Probabilitas kelas</span><span id="model-name">—</span></div><div class="probability-row"><span>Normal</span><div class="bar-track"><div id="normal-bar" class="bar normal-bar"></div></div><b id="normal-value">—</b></div><div class="probability-row"><span>Kardiomegali</span><div class="bar-track"><div id="cardio-bar" class="bar cardio-bar"></div></div><b id="cardio-value">—</b></div></div>
+          <div class="probability-block">
+            <div class="probability-heading"><span>Tingkat keyakinan deteksi</span><span id="model-name">—</span></div>
+            <div class="probability-row" id="normal-row" hidden><span>Normal</span><div class="bar-track"><div id="normal-bar" class="bar normal-bar"></div></div><b id="normal-value">—</b></div>
+            <div class="probability-row" id="cardio-row" hidden><span>Kardiomegali</span><div class="bar-track"><div id="cardio-bar" class="bar cardio-bar"></div></div><b id="cardio-value">—</b></div>
+          </div>
+          <div class="clinical-note-box" id="clinical-note-box" style="margin-top:12px;padding:10px 12px;background:#f3f7f4;border-left:3px solid var(--green);border-radius:4px;">
+            <b style="display:block;margin-bottom:4px;font-size:9px;color:var(--green-dark);letter-spacing:0.5px;">CATATAN KLINIS RADIOLOGI</b>
+            <p id="clinical-note" style="margin:0;font-size:11px;line-height:1.5;color:#35453c;"></p>
+          </div>
           <div class="result-footnote"><span>ⓘ</span><p>Hasil ini merupakan prediksi model AI untuk tujuan edukasi dan penelitian, bukan diagnosis medis. Konsultasikan hasil dengan dokter.</p></div><button class="reset-button" id="reset-button" type="button">← Analisis gambar lain</button>
         </div>
         <div class="disclaimer-empty" id="disclaimer-empty"><span>ⓘ</span> Alat bantu penelitian · Bukan pengganti diagnosis profesional</div>

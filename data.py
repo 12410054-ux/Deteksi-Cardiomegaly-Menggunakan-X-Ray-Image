@@ -1,10 +1,10 @@
+"""Entrypoint proxy for dataset inspection."""
 import os
+import sys
+import runpy
 
-base_path = os.path.dirname(os.path.abspath(__file__))
-
-for split in ["train", "test"]:
-    print("\n", split.upper())
-
-    for kelas in os.listdir(os.path.join(base_path, split)):
-        path = os.path.join(base_path, split, kelas)
-        print(kelas, ":", len(os.listdir(path)))
+if __name__ == "__main__":
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    target = os.path.join(base_dir, "ml_pipeline", "utils", "data.py")
+    sys.path.insert(0, base_dir)
+    runpy.run_path(target, run_name="__main__")

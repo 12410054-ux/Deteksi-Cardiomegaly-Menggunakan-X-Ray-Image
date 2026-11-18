@@ -1,6 +1,9 @@
 train/
 test/
+val/
 testing/
+docs/
+evaluation_reports/
 tuning_results/
 error_analysis_output/
 __pycache__/

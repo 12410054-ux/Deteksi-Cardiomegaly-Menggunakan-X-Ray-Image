@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2800 980" width="2800" height="980">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap');
+      text { font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+      .mono { font-family: 'JetBrains Mono', Consolas, monospace; }
+      .title { font-size: 34px; font-weight: 800; fill: #0F172A; }
+      .subtitle { font-size: 18px; font-weight: 500; fill: #64748B; }
+      .layer-card-title { font-size: 17px; font-weight: 700; fill: #0F172A; }
+      .layer-sub { font-size: 13px; font-weight: 500; fill: #475569; }
+      .shape-badge { font-size: 14px; font-weight: 700; fill: #1D4ED8; }
+      .param-badge { font-size: 13px; font-weight: 600; fill: #059669; }
+    </style>
+
+    <filter id="cardShadow2" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#0F172A" flood-opacity="0.08"/>
+    </filter>
+
+    <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#64748B"/>
+    </marker>
+  </defs>
+
+  <rect width="2800" height="980" fill="#F8FAFC"/>
+  <rect x="20" y="20" width="2760" height="940" rx="20" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+
+  <!-- Title Section -->
+  <g transform="translate(60, 50)">
+    <text x="0" y="32" class="title">Layer-by-Layer Architectural Specification: Custom CNN</text>
+    <text x="0" y="65" class="subtitle">Complete tensor dimensionality, filter configurations, activations, and parameter distribution</text>
+  </g>
+
+  <line x1="60" y1="135" x2="2740" y2="135" stroke="#E2E8F0" stroke-width="1.5"/>
+
+  <!-- Pipeline Horizontal Layout: 10 Major Steps -->
+  <!-- Step width: 230, gap: 35 -->
+
+  <!-- STEP 1: Input -->
+  <g transform="translate(60, 160)" filter="url(#cardShadow2)">
+    <rect width="235" height="480" rx="16" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+    <rect width="235" height="42" rx="16" fill="#F1F5F9"/>
+    <text x="117" y="27" font-size="14" font-weight="700" fill="#334155" text-anchor="middle">INPUT LAYER</text>
+
+    <g transform="translate(20, 60)">
+      <rect width="195" height="150" rx="12" fill="#0F172A"/>
+      <image href="data:image/png;base64,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" x="10" y="10" width="175" height="130" preserveAspectRatio="xMidYMid slice"/>
+    </g>
+
+    <g transform="translate(20, 230)">
+      <text x="0" y="20" class="layer-card-title">Input Tensor</text>
+      <text x="0" y="42" class="layer-sub">Posteroanterior X-ray</text>
+
+      <rect x="0" y="60" width="195" height="40" rx="8" fill="#EFF6FF" stroke="#BFDBFE"/>
+      <text x="97" y="85" class="shape-badge" text-anchor="middle" class="mono">(None, 160, 160, 3)</text>
+
+      <text x="0" y="125" font-size="12" font-weight="600" fill="#64748B">Channels: 3 (RGB)</text>
+      <text x="0" y="145" font-size="12" fill="#64748B">Range: [0.0 , 1.0]</text>
+      <text x="0" y="165" font-size="12" fill="#64748B">Interpolation: Nearest</text>
+
+      <rect x="0" y="185" width="195" height="34" rx="8" fill="#F1F5F9"/>
+      <text x="97" y="207" font-size="12" font-weight="700" fill="#475569" text-anchor="middle">Params: 0</text>
+    </g>
+  </g>
+
+  <line x1="305" y1="400" x2="330" y2="400" stroke="#94A3B8" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- STEP 2: Conv Block 1 -->
+  <g transform="translate(340, 160)" filter="url(#cardShadow2)">
+    <rect width="250" height="480" rx="16" fill="#FFFFFF" stroke="#BFDBFE" stroke-width="1.5"/>
+    <rect width="250" height="42" rx="16" fill="#DBEAFE"/>
+    <text x="125" y="27" font-size="14" font-weight="700" fill="#1D4ED8" text-anchor="middle">CONV BLOCK 1</text>
+
+    <g transform="translate(20, 60)">
+      <text x="0" y="20" class="layer-card-title">Conv2D (32@3×3)</text>
+      <text x="0" y="40" class="layer-sub">Activation: ReLU | Stride: 1</text>
+      <rect x="0" y="50" width="210" height="36" rx="8" fill="#EFF6FF" stroke="#BFDBFE"/>
+      <text x="105" y="73" class="shape-badge" text-anchor="middle" class="mono">(None, 158, 158, 32)</text>
+      <text x="0" y="106" font-size="12" font-weight="600" fill="#2563EB">Params: (3×3×3+1)×32 = 896</text>
+
+      <line x1="0" y1="125" x2="210" y2="125" stroke="#E2E8F0" stroke-width="1"/>
+
+      <text x="0" y="150" class="layer-card-title">MaxPooling2D (2×2)</text>
+      <text x="0" y="170" class="layer-sub">Pool: 2×2 | Stride: 2 (Valid)</text>
+      <rect x="0" y="180" width="210" height="36" rx="8" fill="#FEF3C7" stroke="#FDE68A"/>
+      <text x="105" y="203" font-size="14" font-weight="700" fill="#D97706" text-anchor="middle" class="mono">(None, 79, 79, 32)</text>
+      <text x="0" y="236" font-size="12" fill="#64748B">Params: 0 (Downsampling)</text>
+
+      <line x1="0" y1="255" x2="210" y2="255" stroke="#E2E8F0" stroke-width="1"/>
+
+      <text x="0" y="280" font-size="12" font-weight="700" fill="#0F172A">Extracted Features:</text>
+      <text x="0" y="300" font-size="12" fill="#475569">• Low-level edge detectors</text>
+      <text x="0" y="320" font-size="12" fill="#475569">• Rib boundaries &amp; clavicle</text>
+      <text x="0" y="340" font-size="12" fill="#475569">• Lung-pleura contrast</text>
+
+      <rect x="0" y="360" width="210" height="34" rx="8" fill="#F1F5F9"/>
+      <text x="105" y="382" font-size="12" font-weight="700" fill="#1E40AF" text-anchor="middle">Total Block 1: 896 Params</text>
+    </g>
+  </g>
+
+  <line x1="600" y1="400" x2="625" y2="400" stroke="#94A3B8" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- STEP 3: Conv Block 2 -->
+  <g transform="translate(635, 160)" filter="url(#cardShadow2)">
+    <rect width="250" height="480" rx="16" fill="#FFFFFF" stroke="#BFDBFE" stroke-width="1.5"/>
+    <rect width="250" height="42" rx="16" fill="#DBEAFE"/>
+    <text x="125" y="27" font-size="14" font-weight="700" fill="#1D4ED8" text-anchor="middle">CONV BLOCK 2</text>
+
+    <g transform="translate(20, 60)">
+      <text x="0" y="20" class="layer-card-title">Conv2D (64@3×3)</text>
+      <text x="0" y="40" class="layer-sub">Activation: ReLU | Stride: 1</text>
+      <rect x="0" y="50" width="210" height="36" rx="8" fill="#EFF6FF" stroke="#BFDBFE"/>
+      <text x="105" y="73" class="shape-badge" text-anchor="middle" class="mono">(None, 77, 77, 64)</text>
+      <text x="0" y="106" font-size="12" font-weight="600" fill="#2563EB">Params: (3×3×32+1)×64 = 18,496</text>
+
+      <line x1="0" y1="125" x2="210" y2="125" stroke="#E2E8F0" stroke-width="1"/>
+
+      <text x="0" y="150" class="layer-card-title">MaxPooling2D (2×2)</text>
+      <text x="0" y="170" class="layer-sub">Pool: 2×2 | Stride: 2 (Valid)</text>
+      <rect x="0" y="180" width="210" height="36" rx="8" fill="#FEF3C7" stroke="#FDE68A"/>
+      <text x="105" y="203" font-size="14" font-weight="700" fill="#D97706" text-anchor="middle" class="mono">(None, 38, 38, 64)</text>
+      <text x="0" y="236" font-size="12" fill="#64748B">Params: 0 (Downsampling)</text>
+
+      <line x1="0" y1="255" x2="210" y2="255" stroke="#E2E8F0" stroke-width="1"/>
+
+      <text x="0" y="280" font-size="12" font-weight="700" fill="#0F172A">Extracted Features:</text>
+      <text x="0" y="300" font-size="12" fill="#475569">• Diaphragm dome curves</text>
+      <text x="0" y="320" font-size="12" fill="#475569">• Spine alignment lines</text>
+      <text x="0" y="340" font-size="12" fill="#475569">• Costophrenic recesses</text>
+
+      <rect x="0" y="360" width="210" height="34" rx="8" fill="#F1F5F9"/>
+      <text x="105" y="382" font-size="12" font-weight="700" fill="#1E40AF" text-anchor="middle">Total Block 2: 18,496 Params</text>
+    </g>
+  </g>
+
+  <line x1="895" y1="400" x2="920" y2="400" stroke="#94A3B8" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- STEP 4: Conv Block 3 -->
+  <g transform="translate(930, 160)" filter="url(#cardShadow2)">
+    <rect width="250" height="480" rx="16" fill="#FFFFFF" stroke="#BFDBFE" stroke-width="1.5"/>
+    <rect width="250" height="42" rx="16" fill="#DBEAFE"/>
+    <text x="125" y="27" font-size="14" font-weight="700" fill="#1D4ED8" text-anchor="middle">CONV BLOCK 3</text>
+
+    <g transform="translate(20, 60)">
+      <text x="0" y="20" class="layer-card-title">Conv2D (128@3×3)</text>
+      <text x="0" y="40" class="layer-sub">Activation: ReLU | Stride: 1</text>
+      <rect x="0" y="50" width="210" height="36" rx="8" fill="#EFF6FF" stroke="#BFDBFE"/>
+      <text x="105" y="73" class="shape-badge" text-anchor="middle" class="mono">(None, 36, 36, 128)</text>
+      <text x="0" y="106" font-size="12" font-weight="600" fill="#2563EB">Params: (3×3×64+1)×128 = 73,856</text>
+
+      <line x1="0" y1="125" x2="210" y2="125" stroke="#E2E8F0" stroke-width="1"/>
+
+      <text x="0" y="150" class="layer-card-title">MaxPooling2D (2×2)</text>
+      <text x="0" y="170" class="layer-sub">Pool: 2×2 | Stride: 2 (Valid)</text>
+      <rect x="0" y="180" width="210" height="36" rx="8" fill="#FEF3C7" stroke="#FDE68A"/>
+      <text x="105" y="203" font-size="14" font-weight="700" fill="#D97706" text-anchor="middle" class="mono">(None, 18, 18, 128)</text>
+      <text x="0" y="236" font-size="12" fill="#64748B">Params: 0 (Downsampling)</text>
+
+      <line x1="0" y1="255" x2="210" y2="255" stroke="#E2E8F0" stroke-width="1"/>
+
+      <text x="0" y="280" font-size="12" font-weight="700" fill="#0F172A">Extracted Features:</text>
+      <text x="0" y="300" font-size="12" fill="#475569">• Cardiac apex &amp; left ventricle</text>
+      <text x="0" y="320" font-size="12" fill="#475569">• Right cardiac margin</text>
+      <text x="0" y="340" font-size="12" fill="#475569">• Aortic knob silhouette</text>
+
+      <rect x="0" y="360" width="210" height="34" rx="8" fill="#F1F5F9"/>
+      <text x="105" y="382" font-size="12" font-weight="700" fill="#1E40AF" text-anchor="middle">Total Block 3: 73,856 Params</text>
+    </g>
+  </g>
+
+  <line x1="1190" y1="400" x2="1215" y2="400" stroke="#94A3B8" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- STEP 5: Conv Block 4 -->
+  <g transform="translate(1225, 160)" filter="url(#cardShadow2)">
+    <rect width="250" height="480" rx="16" fill="#FFFFFF" stroke="#BFDBFE" stroke-width="1.5"/>
+    <rect width="250" height="42" rx="16" fill="#DBEAFE"/>
+    <text x="125" y="27" font-size="14" font-weight="700" fill="#1D4ED8" text-anchor="middle">CONV BLOCK 4</text>
+
+    <g transform="translate(20, 60)">
+      <text x="0" y="20" class="layer-card-title">Conv2D (256@3×3)</text>
+      <text x="0" y="40" class="layer-sub">Activation: ReLU | Stride: 1</text>
+      <rect x="0" y="50" width="210" height="36" rx="8" fill="#EFF6FF" stroke="#BFDBFE"/>
+      <text x="105" y="73" class="shape-badge" text-anchor="middle" class="mono">(None, 16, 16, 256)</text>
+      <text x="0" y="106" font-size="12" font-weight="600" fill="#2563EB">Params: (3×3×128+1)×256 = 295,168</text>
+
+      <line x1="0" y1="125" x2="210" y2="125" stroke="#E2E8F0" stroke-width="1"/>
+
+      <text x="0" y="150" class="layer-card-title">MaxPooling2D (Terminal)</text>
+      <text x="0" y="170" class="layer-sub">Pool: 2×2 | Stride: 2 (Valid)</text>
+      <rect x="0" y="180" width="210" height="36" rx="8" fill="#FEF3C7" stroke="#FDE68A"/>
+      <text x="105" y="203" font-size="14" font-weight="700" fill="#D97706" text-anchor="middle" class="mono">(None, 8, 8, 256)</text>
+      <text x="0" y="236" font-size="12" fill="#64748B">Params: 0 (Terminal feature map)</text>
+
+      <line x1="0" y1="255" x2="210" y2="255" stroke="#E2E8F0" stroke-width="1"/>
+
+      <text x="0" y="280" font-size="12" font-weight="700" fill="#0F172A">Extracted Features:</text>
+      <text x="0" y="300" font-size="12" fill="#475569">• Global Cardiothoracic Ratio</text>
+      <text x="0" y="320" font-size="12" fill="#475569">• Pathological heart enlargement</text>
+      <text x="0" y="340" font-size="12" fill="#475569">• High-level thoracic geometry</text>
+
+      <rect x="0" y="360" width="210" height="34" rx="8" fill="#F1F5F9"/>
+      <text x="105" y="382" font-size="12" font-weight="700" fill="#1E40AF" text-anchor="middle">Total Block 4: 295,168 Params</text>
+    </g>
+  </g>
+
+  <line x1="1485" y1="400" x2="1510" y2="400" stroke="#94A3B8" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- STEP 6: Flatten -->
+  <g transform="translate(1520, 160)" filter="url(#cardShadow2)">
+    <rect width="230" height="480" rx="16" fill="#FFFFFF" stroke="#E9D5FF" stroke-width="1.5"/>
+    <rect width="230" height="42" rx="16" fill="#FAF5FF"/>
+    <text x="115" y="27" font-size="14" font-weight="700" fill="#7E22CE" text-anchor="middle">FLATTEN LAYER</text>
+
+    <g transform="translate(20, 60)">
+      <text x="0" y="20" class="layer-card-title">Flatten Reshape</text>
+      <text x="0" y="40" class="layer-sub">Converts 3D → 1D Vector</text>
+
+      <rect x="0" y="60" width="190" height="44" rx="8" fill="#FAF5FF" stroke="#E9D5FF"/>
+      <text x="95" y="87" font-size="15" font-weight="700" fill="#7E22CE" text-anchor="middle" class="mono">(None, 16,384)</text>
+
+      <g transform="translate(0, 130)">
+        <text x="0" y="20" font-size="12" font-weight="700" fill="#0F172A">Dimensional Calculation:</text>
+        <text x="0" y="45" font-size="13" font-weight="600" fill="#6B21A8" class="mono">8 × 8 × 256 = 16,384</text>
+        <text x="0" y="70" font-size="12" fill="#64748B">Preserves all spatial activations</text>
+        <text x="0" y="90" font-size="12" fill="#64748B">without information loss</text>
+        
+        <text x="0" y="130" font-size="12" font-weight="700" fill="#0F172A">Trainable Weights:</text>
+        <text x="0" y="150" font-size="12" fill="#64748B">0 parameters (Reshape only)</text>
+      </g>
+
+      <rect x="0" y="360" width="190" height="34" rx="8" fill="#F1F5F9"/>
+      <text x="95" y="382" font-size="12" font-weight="700" fill="#7E22CE" text-anchor="middle">Params: 0</text>
+    </g>
+  </g>
+
+  <line x1="1760" y1="400" x2="1785" y2="400" stroke="#94A3B8" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- STEP 7: Dense 128 -->
+  <g transform="translate(1795, 160)" filter="url(#cardShadow2)">
+    <rect width="240" height="480" rx="16" fill="#FFFFFF" stroke="#A7F3D0" stroke-width="1.5"/>
+    <rect width="240" height="42" rx="16" fill="#ECFDF5"/>
+    <text x="120" y="27" font-size="14" font-weight="700" fill="#047857" text-anchor="middle">DENSE HIDDEN LAYER</text>
+
+    <g transform="translate(20, 60)">
+      <text x="0" y="20" class="layer-card-title">Fully Connected</text>
+      <text x="0" y="40" class="layer-sub">Activation: ReLU</text>
+
+      <rect x="0" y="60" width="200" height="44" rx="8" fill="#ECFDF5" stroke="#A7F3D0"/>
+      <text x="100" y="87" font-size="15" font-weight="700" fill="#047857" text-anchor="middle" class="mono">(None, 128)</text>
+
+      <g transform="translate(0, 130)">
+        <text x="0" y="20" font-size="12" font-weight="700" fill="#0F172A">Connection Matrix:</text>
+        <text x="0" y="45" font-size="12" fill="#64748B" class="mono">Weights: 16,384 × 128</text>
+        <text x="0" y="65" font-size="12" fill="#64748B" class="mono">= 2,097,152 weights</text>
+        <text x="0" y="85" font-size="12" fill="#64748B" class="mono">Biases: 128</text>
+        
+        <text x="0" y="125" font-size="12" font-weight="700" fill="#047857">Layer Parameters:</text>
+        <text x="0" y="145" font-size="14" font-weight="800" fill="#065F46" class="mono">2,097,280 params</text>
+        <text x="0" y="165" font-size="11" fill="#64748B">(84.37% of model)</text>
+      </g>
+
+      <rect x="0" y="360" width="200" height="34" rx="8" fill="#F1F5F9"/>
+      <text x="100" y="382" font-size="12" font-weight="700" fill="#065F46" text-anchor="middle">Params: 2,097,280</text>
+    </g>
+  </g>
+
+  <line x1="2045" y1="400" x2="2070" y2="400" stroke="#94A3B8" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- STEP 8: Dropout -->
+  <g transform="translate(2080, 160)" filter="url(#cardShadow2)">
+    <rect width="210" height="480" rx="16" fill="#FFFFFF" stroke="#FBCFE8" stroke-width="1.5"/>
+    <rect width="210" height="42" rx="16" fill="#FDF2F8"/>
+    <text x="105" y="27" font-size="14" font-weight="700" fill="#BE185D" text-anchor="middle">DROPOUT LAYER</text>
+
+    <g transform="translate(20, 60)">
+      <text x="0" y="20" class="layer-card-title">Regularization</text>
+      <text x="0" y="40" class="layer-sub">Rate = 0.50 (50%)</text>
+
+      <rect x="0" y="60" width="170" height="44" rx="8" fill="#FDF2F8" stroke="#FBCFE8"/>
+      <text x="85" y="87" font-size="15" font-weight="700" fill="#BE185D" text-anchor="middle" class="mono">(None, 128)</text>
+
+      <g transform="translate(0, 130)">
+        <text x="0" y="20" font-size="12" font-weight="700" fill="#0F172A">Mechanism:</text>
+        <text x="0" y="45" font-size="12" fill="#475569">• Randomly deactivates</text>
+        <text x="0" y="65" font-size="12" fill="#475569">  50% of hidden neurons</text>
+        <text x="0" y="85" font-size="12" fill="#475569">  during each train batch</text>
+        <text x="0" y="110" font-size="12" fill="#475569">• Prevents complex co-</text>
+        <text x="0" y="130" font-size="12" fill="#475569">  adaptation &amp; memorization</text>
+        <text x="0" y="155" font-size="12" fill="#475569">• Inactive during inference</text>
+      </g>
+
+      <rect x="0" y="360" width="170" height="34" rx="8" fill="#F1F5F9"/>
+      <text x="85" y="382" font-size="12" font-weight="700" fill="#BE185D" text-anchor="middle">Params: 0</text>
+    </g>
+  </g>
+
+  <line x1="2300" y1="400" x2="2325" y2="400" stroke="#94A3B8" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- STEP 9: Output Layer -->
+  <g transform="translate(2335, 160)" filter="url(#cardShadow2)">
+    <rect width="210" height="480" rx="16" fill="#FFFFFF" stroke="#FECACA" stroke-width="1.5"/>
+    <rect width="210" height="42" rx="16" fill="#FEF2F2"/>
+    <text x="105" y="27" font-size="14" font-weight="700" fill="#991B1B" text-anchor="middle">OUTPUT LAYER</text>
+
+    <g transform="translate(20, 60)">
+      <text x="0" y="20" class="layer-card-title">Dense (Sigmoid)</text>
+      <text x="0" y="40" class="layer-sub">Binary Classification</text>
+
+      <rect x="0" y="60" width="170" height="44" rx="8" fill="#FEF2F2" stroke="#FECACA"/>
+      <text x="85" y="87" font-size="15" font-weight="700" fill="#DC2626" text-anchor="middle" class="mono">(None, 1)</text>
+
+      <g transform="translate(0, 130)">
+        <text x="0" y="20" font-size="12" font-weight="700" fill="#0F172A">Sigmoid Formulation:</text>
+        <text x="0" y="45" font-size="13" font-weight="700" fill="#B91C1C" class="mono">ŷ = 1 / (1 + e⁻ᶻ)</text>
+        
+        <text x="0" y="80" font-size="12" font-weight="700" fill="#0F172A">Parameters:</text>
+        <text x="0" y="100" font-size="12" fill="#64748B" class="mono">128 weights + 1 bias</text>
+        <text x="0" y="120" font-size="13" font-weight="700" fill="#DC2626" class="mono">= 129 params</text>
+
+        <text x="0" y="155" font-size="12" font-weight="700" fill="#0F172A">Output Probability:</text>
+        <text x="0" y="175" font-size="12" fill="#64748B">ŷ ∈ [0.00, 1.00]</text>
+      </g>
+
+      <rect x="0" y="360" width="170" height="34" rx="8" fill="#F1F5F9"/>
+      <text x="85" y="382" font-size="12" font-weight="700" fill="#DC2626" text-anchor="middle">Params: 129</text>
+    </g>
+  </g>
+
+  <line x1="2555" y1="400" x2="2580" y2="400" stroke="#94A3B8" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- STEP 10: Triage Decision -->
+  <g transform="translate(2590, 160)" filter="url(#cardShadow2)">
+    <rect width="150" height="480" rx="16" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+    <rect width="150" height="42" rx="16" fill="#F8FAFC"/>
+    <text x="75" y="27" font-size="13" font-weight="700" fill="#334155" text-anchor="middle">DECISION</text>
+
+    <g transform="translate(15, 60)">
+      <!-- Cardiomegaly -->
+      <rect width="120" height="150" rx="10" fill="#FEF2F2" stroke="#F87171"/>
+      <text x="60" y="25" font-size="10" font-weight="700" fill="#991B1B" text-anchor="middle">ŷ ≥ 0.50</text>
+      <text x="60" y="48" font-size="13" font-weight="800" fill="#DC2626" text-anchor="middle">Cardiomegaly</text>
+      <text x="60" y="70" font-size="10" fill="#7F1D1D" text-anchor="middle">(Enlarged Heart)</text>
+      <line x1="10" y1="85" x2="110" y2="85" stroke="#FECACA"/>
+      <text x="60" y="105" font-size="10" font-weight="600" fill="#991B1B" text-anchor="middle">TP: 436</text>
+      <text x="60" y="125" font-size="10" font-weight="600" fill="#B91C1C" text-anchor="middle">FN: 121</text>
+      <text x="60" y="140" font-size="9" fill="#64748B" text-anchor="middle">Recall: 78.28%</text>
+
+      <!-- Normal -->
+      <g transform="translate(0, 170)">
+        <rect width="120" height="150" rx="10" fill="#ECFDF5" stroke="#34D399"/>
+        <text x="60" y="25" font-size="10" font-weight="700" fill="#065F46" text-anchor="middle">ŷ &lt; 0.50</text>
+        <text x="60" y="48" font-size="13" font-weight="800" fill="#059669" text-anchor="middle">Normal</text>
+        <text x="60" y="70" font-size="10" fill="#064E3B" text-anchor="middle">(Healthy Silhouette)</text>
+        <line x1="10" y1="85" x2="110" y2="85" stroke="#A7F3D0"/>
+        <text x="60" y="105" font-size="10" font-weight="600" fill="#065F46" text-anchor="middle">TN: 405</text>
+        <text x="60" y="125" font-size="10" font-weight="600" fill="#047857" text-anchor="middle">FP: 152</text>
+        <text x="60" y="140" font-size="9" fill="#64748B" text-anchor="middle">Spec: 72.71%</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ===================================================================== -->
+  <!-- BOTTOM SUMMARY TABLE                                                  -->
+  <!-- ===================================================================== -->
+  <g transform="translate(60, 680)">
+    <rect width="2680" height="240" rx="16" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.5"/>
+
+    <!-- Table Header -->
+    <g transform="translate(30, 25)">
+      <text x="0" y="20" font-size="16" font-weight="700" fill="#0F172A">Mathematical Parameter Accounting Table</text>
+      
+      <!-- Columns -->
+      <g transform="translate(0, 45)">
+        <rect width="2620" height="32" rx="6" fill="#E2E8F0"/>
+        <text x="20" y="21" font-size="12" font-weight="700" fill="#334155">STAGE / BLOCK</text>
+        <text x="400" y="21" font-size="12" font-weight="700" fill="#334155">LAYER TYPE &amp; SPECS</text>
+        <text x="850" y="21" font-size="12" font-weight="700" fill="#334155">OUTPUT TENSOR SHAPE</text>
+        <text x="1300" y="21" font-size="12" font-weight="700" fill="#334155">WEIGHT FORMULA</text>
+        <text x="1800" y="21" font-size="12" font-weight="700" fill="#334155">LAYER PARAMETERS</text>
+        <text x="2200" y="21" font-size="12" font-weight="700" fill="#334155">CUMULATIVE PARAMS</text>
+
+        <!-- Rows -->
+        <g transform="translate(0, 40)">
+          <text x="20" y="18" font-size="13" font-weight="600" fill="#0F172A">Conv Block 1</text>
+          <text x="400" y="18" font-size="13" fill="#475569">Conv2D (32, 3×3, ReLU) + MaxPool (2×2)</text>
+          <text x="850" y="18" font-size="13" fill="#1E40AF" class="mono">(158, 158, 32) → (79, 79, 32)</text>
+          <text x="1300" y="18" font-size="13" fill="#475569" class="mono">(3 × 3 × 3 + 1) × 32</text>
+          <text x="1800" y="18" font-size="13" font-weight="700" fill="#0F172A" class="mono">896</text>
+          <text x="2200" y="18" font-size="13" fill="#64748B" class="mono">896 (0.04%)</text>
+        </g>
+
+        <g transform="translate(0, 68)">
+          <text x="20" y="18" font-size="13" font-weight="600" fill="#0F172A">Conv Block 2</text>
+          <text x="400" y="18" font-size="13" fill="#475569">Conv2D (64, 3×3, ReLU) + MaxPool (2×2)</text>
+          <text x="850" y="18" font-size="13" fill="#1E40AF" class="mono">(77, 77, 64) → (38, 38, 64)</text>
+          <text x="1300" y="18" font-size="13" fill="#475569" class="mono">(3 × 3 × 32 + 1) × 64</text>
+          <text x="1800" y="18" font-size="13" font-weight="700" fill="#0F172A" class="mono">18,496</text>
+          <text x="2200" y="18" font-size="13" fill="#64748B" class="mono">19,392 (0.78%)</text>
+        </g>
+
+        <g transform="translate(0, 96)">
+          <text x="20" y="18" font-size="13" font-weight="600" fill="#0F172A">Conv Block 3</text>
+          <text x="400" y="18" font-size="13" fill="#475569">Conv2D (128, 3×3, ReLU) + MaxPool (2×2)</text>
+          <text x="850" y="18" font-size="13" fill="#1E40AF" class="mono">(36, 36, 128) → (18, 18, 128)</text>
+          <text x="1300" y="18" font-size="13" fill="#475569" class="mono">(3 × 3 × 64 + 1) × 128</text>
+          <text x="1800" y="18" font-size="13" font-weight="700" fill="#0F172A" class="mono">73,856</text>
+          <text x="2200" y="18" font-size="13" fill="#64748B" class="mono">93,248 (3.75%)</text>
+        </g>
+
+        <g transform="translate(0, 124)">
+          <text x="20" y="18" font-size="13" font-weight="600" fill="#0F172A">Conv Block 4</text>
+          <text x="400" y="18" font-size="13" fill="#475569">Conv2D (256, 3×3, ReLU) + MaxPool (2×2)</text>
+          <text x="850" y="18" font-size="13" fill="#1E40AF" class="mono">(16, 16, 256) → (8, 8, 256)</text>
+          <text x="1300" y="18" font-size="13" fill="#475569" class="mono">(3 × 3 × 128 + 1) × 256</text>
+          <text x="1800" y="18" font-size="13" font-weight="700" fill="#0F172A" class="mono">295,168</text>
+          <text x="2200" y="18" font-size="13" fill="#64748B" class="mono">388,416 (15.63%)</text>
+        </g>
+
+        <g transform="translate(0, 152)">
+          <text x="20" y="18" font-size="13" font-weight="700" fill="#7E22CE">Classifier Head</text>
+          <text x="400" y="18" font-size="13" fill="#475569">Flatten + Dense (128) + Dropout (0.50) + Dense (1)</text>
+          <text x="850" y="18" font-size="13" fill="#7E22CE" class="mono">16,384 → 128 → 1</text>
+          <text x="1300" y="18" font-size="13" fill="#475569" class="mono">(16,384 + 1) × 128 + (128 + 1) × 1</text>
+          <text x="1800" y="18" font-size="13" font-weight="800" fill="#7E22CE" class="mono">2,097,409</text>
+          <text x="2200" y="18" font-size="14" font-weight="800" fill="#0F172A" class="mono">2,485,825 (100.0%)</text>
+        </g>
+      </g>
+    </g>
+  </g>
+
+</svg>

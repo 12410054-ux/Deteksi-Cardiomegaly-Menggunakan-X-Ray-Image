@@ -1,42 +1,10 @@
-import cv2
-import numpy as np
-from tensorflow.keras.models import load_model
-import matplotlib.pyplot as plt
+"""Entrypoint proxy for CLI prediction."""
 import os
+import sys
+import runpy
 
-IMG_SIZE = 160
-
-model = load_model(os.path.join("models", "model_cardiomegaly_transfer_finetuned.keras") if os.path.exists(os.path.join("models", "model_cardiomegaly_transfer_finetuned.keras")) else "model_cardiomegaly_transfer_finetuned.keras")
-
-image_path = r"testing/tes6.png"
-
-if not os.path.exists(image_path):
-    print("File gambar tidak ditemukan!")
-    exit()
-
-# Baca gambar RGB (bukan grayscale)
-img = cv2.imread(image_path)
-img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-
-img_resized = cv2.resize(img, (IMG_SIZE, IMG_SIZE), interpolation=cv2.INTER_NEAREST)
-
-img_array = img_resized / 255.0
-img_array = np.expand_dims(img_array, axis=0)
-
-prediction = model.predict(img_array, verbose=0)[0][0]
-
-# Sigmoid output = P(Normal), karena folder: Cardiomegaly=0, Normal=1
-if prediction < 0.5:
-    result = "Cardiomegaly (Pembesaran Jantung)"
-    confidence = (1 - prediction) * 100
-else:
-    result = "Normal"
-    confidence = prediction * 100
-
-print("Hasil:", result)
-print("Confidence: %.2f%%" % confidence)
-
-plt.imshow(img)
-plt.title(f"{result} ({confidence:.2f}%)")
-plt.axis("off")
-plt.show()
+if __name__ == "__main__":
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    target = os.path.join(base_dir, "ml_pipeline", "utils", "predict.py")
+    sys.path.insert(0, base_dir)
+    runpy.run_path(target, run_name="__main__")

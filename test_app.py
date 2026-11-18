@@ -197,14 +197,14 @@ test("POST /predict tanpa gambar → 400", resp.status_code == 400)
 data = resp.get_json()
 test("Response JSON has 'error'", "error" in data)
 
-# Test POST /predict dengan gambar Normal
+# Test POST /predict dengan gambar Normal (Model CNN)
 with open(test_normal, "rb") as f:
     resp = client.post(
         "/predict",
-        data={"image": (f, "test_normal.png"), "model": "mobilenet"},
+        data={"image": (f, "test_normal.png"), "model": "cnn"},
         content_type="multipart/form-data",
     )
-test("POST /predict [Normal, mobilenet] → 200", resp.status_code == 200)
+test("POST /predict [Normal, cnn] → 200", resp.status_code == 200)
 data = resp.get_json()
 test("Response has 'label'", "label" in data)
 test("Response has 'confidence'", "confidence" in data)
@@ -268,10 +268,52 @@ from io import BytesIO
 
 resp = client.post(
     "/predict",
-    data={"image": (BytesIO(b"not an image"), "test.txt"), "model": "mobilenet"},
+    data={"image": (BytesIO(b"not an image"), "test.txt"), "model": "cnn"},
     content_type="multipart/form-data",
 )
 test("POST /predict [.txt file] → 400", resp.status_code == 400)
+
+# Test penolakan gambar non-X-ray (Citra Berwarna / Selfie / Objek Umum)
+color_img = Image.new("RGB", (200, 200), color=(180, 100, 60))
+color_buf = BytesIO()
+color_img.save(color_buf, format="PNG")
+color_buf.seek(0)
+resp = client.post(
+    "/predict",
+    data={"image": (color_buf, "selfie.png"), "model": "cnn"},
+    content_type="multipart/form-data",
+)
+test("POST /predict [Gambar Berwarna] → 400", resp.status_code == 400)
+test("Gambar Berwarna → is_validation_error", resp.get_json().get("is_validation_error") is True)
+
+# Test penolakan dokumen scan kertas putih
+from PIL import ImageDraw
+doc_img = Image.new("RGB", (250, 300), color=(250, 250, 250))
+d = ImageDraw.Draw(doc_img)
+for y in range(30, 270, 15):
+    d.line([(20, y), (230, y)], fill=(10, 10, 10), width=2)
+doc_buf = BytesIO()
+doc_img.save(doc_buf, format="PNG")
+doc_buf.seek(0)
+resp = client.post(
+    "/predict",
+    data={"image": (doc_buf, "dokumen.png"), "model": "cnn"},
+    content_type="multipart/form-data",
+)
+test("POST /predict [Dokumen Teks / Kertas Putih] → 400", resp.status_code == 400)
+test("Dokumen Teks → is_validation_error", resp.get_json().get("is_validation_error") is True)
+
+# Test penolakan gambar polos / blank
+blank_img = Image.new("RGB", (200, 200), color=(128, 128, 128))
+blank_buf = BytesIO()
+blank_img.save(blank_buf, format="PNG")
+blank_buf.seek(0)
+resp = client.post(
+    "/predict",
+    data={"image": (blank_buf, "blank.png"), "model": "cnn"},
+    content_type="multipart/form-data",
+)
+test("POST /predict [Gambar Polos / Blank] → 400", resp.status_code == 400)
 
 # ============================================
 # TEST 5: File Struktur & Deployment Files
@@ -297,13 +339,23 @@ required_files = [
     "evaluasi_cnn.py",
     "evaluasi_transfer.py",
     "duamodel.py",
-    "gradcame_transfer.py",
     "predict.py",
+    "validator.py",
     os.path.join("models", "cnn_model.keras"),
     os.path.join("models", "model_cardiomegaly_transfer_finetuned.keras"),
     "templates/index.html",
     "static/style.css",
     "static/app.js",
+    ".env.example",
+    os.path.join("docs", "reports"),
+    os.path.join("docs", "presentations"),
+    os.path.join("docs", "manuscript"),
+    os.path.join("ml_pipeline", "training", "train_cnn.py"),
+    os.path.join("ml_pipeline", "evaluation", "evaluasi_cnn.py"),
+    os.path.join("ml_pipeline", "utils", "predict.py"),
+    os.path.join("ml_pipeline", "utils", "validator.py"),
+    os.path.join("tools", "run_online.py"),
+    os.path.join("tools", "start_ngrok.js"),
 ]
 
 for f in required_files:
